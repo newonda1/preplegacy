@@ -89,11 +89,45 @@ border-radius:8px;
 font-weight:bold;
 transition:0.2s ease;
 cursor:pointer;
+border:none;
+font-size:16px;
 }
 
 .button:hover{
 transform:translateY(-2px);
 box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.contact-form{
+display:flex;
+flex-direction:column;
+gap:14px;
+max-width:520px;
+margin:30px auto 0;
+}
+
+.contact-form input,
+.contact-form textarea{
+width:100%;
+padding:14px 16px;
+font-size:16px;
+font-family:Arial, Helvetica, sans-serif;
+border:1px solid #cbd5e1;
+border-radius:10px;
+background:rgba(255,255,255,0.9);
+box-sizing:border-box;
+}
+
+.contact-form textarea{
+min-height:120px;
+resize:vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+outline:none;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,0.12);
 }
 
 .features{
@@ -156,8 +190,16 @@ display:block;
     <span class="subline">for High School Athletics</span>
     </h2>
 
-    <a class="button" href="mailto:info@preplegacy.com">Request a Demo</a>
-    <br>
+    <form id="demo-form" class="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="school" placeholder="School Name">
+      <textarea name="message" placeholder="Tell us about your program and what you'd like to build." required></textarea>
+      <button class="button" type="submit">Request a Demo</button>
+    </form>
+
+    <p id="form-status" style="margin-top:12px;color:#475569;"></p>
+
     <a class="button" style="background:#475569;margin-top:15px;" href="https://stats.preplegacy.com">Access Your School Site</a>
 
   </div>
