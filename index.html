@@ -248,5 +248,40 @@ Track player careers, season results, game statistics, and all-time records in o
 
 </footer>
 
+  <script>
+const form = document.getElementById('demo-form');
+const status = document.getElementById('form-status');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  status.textContent = 'Sending...';
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      status.textContent = 'Thanks! Your request has been sent.';
+      form.reset();
+    } else {
+      status.textContent = result.message || 'Something went wrong.';
+    }
+  } catch (error) {
+    status.textContent = 'Something went wrong. Please try again.';
+  }
+});
+</script>
+
 </body>
 </html>
