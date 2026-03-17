@@ -18,7 +18,7 @@ body{
 /* STICKY HERO WRAPPER */
 .hero-scroll-wrap{
   position:relative;
-  height:170vh;
+  height:240vh;
 }
 
 .hero{
@@ -26,7 +26,7 @@ body{
   top:0;
   min-height:100vh;
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
   overflow:hidden;
   padding:40px 20px;
@@ -56,9 +56,17 @@ body{
   position:relative;
   z-index:2;
   max-width:900px;
-  margin:auto;
+  margin:80px auto 0;
   transition:transform 0.08s linear, opacity 0.08s linear;
   will-change:transform, opacity;
+}
+
+.hero-panels{
+  position:relative;
+  z-index:3;
+  max-width:1200px;
+  margin:0 auto;
+  padding:70vh 20px 0;
 }
 
 h2{
@@ -83,7 +91,7 @@ h2{
 }
 
 .demo-section{
-  padding-top:80px;
+  padding-top:90px;
 }
 
 .section-title{
@@ -164,29 +172,34 @@ h2{
 
 .features{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:30px;
-  margin-top:40px;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:36px;
+  margin-top:0;
 }
 
 .feature{
-  background:white;
-  padding:28px;
-  border-radius:14px;
-  box-shadow:0 6px 20px rgba(15,23,42,0.05);
+  background:rgba(255,255,255,0.92);
+  padding:38px;
+  border-radius:24px;
+  box-shadow:0 10px 30px rgba(15,23,42,0.08);
   text-align:left;
+  min-height:210px;
+  backdrop-filter:blur(4px);
 }
 
 .feature h3{
   margin-top:0;
-  margin-bottom:10px;
+  margin-bottom:20px;
   color:#0f172a;
+  font-size:32px;
+  line-height:1.15;
 }
 
 .feature p{
   margin:0;
   color:#475569;
-  line-height:1.6;
+  line-height:1.55;
+  font-size:18px;
 }
 
 .live-demo{
@@ -198,9 +211,24 @@ footer{
   color:#64748b;
 }
 
+@media (max-width: 900px){
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .feature{
+    min-height:auto;
+    text-align:center;
+  }
+
+  .feature h3{
+    font-size:28px;
+  }
+}
+
 @media (max-width: 768px){
   .hero-scroll-wrap{
-    height:120vh;
+    height:210vh;
   }
 
   .hero{
@@ -214,6 +242,14 @@ footer{
 
   .hero-video-mobile{
     display:block;
+  }
+
+  .hero-content{
+    margin-top:70px;
+  }
+
+  .hero-panels{
+    padding-top:72vh;
   }
 
   h2{
@@ -231,10 +267,6 @@ footer{
   .section-copy{
     font-size:17px;
   }
-
-  .feature{
-    text-align:center;
-  }
 }
 </style>
 </head>
@@ -242,6 +274,7 @@ footer{
 <body>
 
 <div class="hero-scroll-wrap">
+
   <header class="hero">
 
     <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
@@ -268,12 +301,42 @@ footer{
     </div>
 
   </header>
+
+  <div class="hero-panels">
+    <div class="features">
+
+      <div class="feature">
+        <h3>Player Career Pages</h3>
+        <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+      </div>
+
+      <div class="feature">
+        <h3>Season Histories</h3>
+        <p>View complete season records, schedules, and playoff brackets.</p>
+      </div>
+
+      <div class="feature">
+        <h3>Program Records</h3>
+        <p>Automatically calculate and display all-time records for your program.</p>
+      </div>
+
+      <div class="feature">
+        <h3>Historical Archive</h3>
+        <p>Preserve decades of program history in one organized place.</p>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <section class="section demo-section">
   <h2 class="section-title">Bring Your Program’s History to Life</h2>
+
   <p class="section-copy">
-    Begin the process of building a complete digital record book for your athletic program.<br>
+    Build a complete digital record book for your athletic program.
+  </p>
+  <p class="section-copy">
     Track player careers, season results, game statistics, and all-time records in one place.
   </p>
 
@@ -292,32 +355,6 @@ footer{
   <a class="button" style="background:#475569;margin-top:10px;" href="https://stats.preplegacy.com">
     Access Your School Site
   </a>
-</section>
-
-<section class="section">
-  <div class="features">
-
-    <div class="feature">
-      <h3>Player Career Pages</h3>
-      <p>Track the full career of every athlete with detailed statistics and game logs.</p>
-    </div>
-
-    <div class="feature">
-      <h3>Season Histories</h3>
-      <p>View complete season records, schedules, and playoff brackets.</p>
-    </div>
-
-    <div class="feature">
-      <h3>Program Records</h3>
-      <p>Automatically calculate and display all-time records for your program.</p>
-    </div>
-
-    <div class="feature">
-      <h3>Historical Archive</h3>
-      <p>Preserve decades of program history in one organized place.</p>
-    </div>
-
-  </div>
 </section>
 
 <section class="section live-demo">
@@ -385,8 +422,8 @@ window.addEventListener('scroll', () => {
   const rect = heroWrap.getBoundingClientRect();
   const progress = Math.min(Math.max(-rect.top / (rect.height - window.innerHeight), 0), 1);
 
-  const moveY = progress * 140;
-  const fade = 1 - (progress * 0.35);
+  const moveY = progress * 110;
+  const fade = 1 - (progress * 0.2);
 
   heroContent.style.transform = `translateY(-${moveY}px)`;
   heroContent.style.opacity = fade;
