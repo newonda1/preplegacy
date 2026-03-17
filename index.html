@@ -422,7 +422,7 @@ window.addEventListener('scroll', () => {
   const rect = heroWrap.getBoundingClientRect();
   const progress = Math.min(Math.max(-rect.top / (rect.height - window.innerHeight), 0), 1);
 
-  const moveY = progress * 220;
+  const moveY = progress * 260;
   const fade = 1 - (progress * 0.45);
 
   heroContent.style.transform = `translateY(-${moveY}px)`;
