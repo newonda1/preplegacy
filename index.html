@@ -109,7 +109,9 @@ body.lightbox-open{
   top:0;
   padding:0 20px 24px;
   box-sizing:border-box;
-  will-change:transform;
+  will-change:transform, opacity;
+  opacity:0;
+  transform:translateY(110vh); /* fully below screen on load */
 }
 
 .hero-panels-inner{
@@ -408,7 +410,7 @@ footer{
   }
 
   .hero-scroll-wrap{
-    height:780vh;
+    height:760vh;
   }
 
   .hero-title{
@@ -558,10 +560,7 @@ footer{
                 onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
                 aria-label="Open full-size Player Career Pages example"
               >
-                <img
-                  src="images/player_career_pages_mini.png"
-                  alt="Player Career Pages preview"
-                >
+                <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
               </button>
 
               <div class="feature-image-note">Tap image to enlarge</div>
@@ -577,10 +576,7 @@ footer{
                 onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
                 aria-label="Open full-size Season Histories example"
               >
-                <img
-                  src="images/season_histories_mini.png"
-                  alt="Season Histories preview"
-                >
+                <img src="images/season_histories_mini.png" alt="Season Histories preview">
               </button>
 
               <div class="feature-image-note">Tap image to enlarge</div>
@@ -596,10 +592,7 @@ footer{
                 onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
                 aria-label="Open Program Records gallery"
               >
-                <img
-                  src="images/program_records_mini.png"
-                  alt="Program Records preview"
-                >
+                <img src="images/program_records_mini.png" alt="Program Records preview">
               </button>
 
               <div class="feature-image-note">Tap image to view more</div>
@@ -654,7 +647,6 @@ footer{
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <div class="lightbox-content" onclick="event.stopPropagation()">
     <button class="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close image">&times;</button>
-
     <button class="lightbox-nav lightbox-prev hidden" id="lightbox-prev" type="button" onclick="showPrevImage()" aria-label="Previous image">&#8249;</button>
     <button class="lightbox-nav lightbox-next hidden" id="lightbox-next" type="button" onclick="showNextImage()" aria-label="Next image">&#8250;</button>
 
@@ -690,9 +682,7 @@ form.addEventListener('submit', async (e) => {
   try {
     const response = await fetch('/api/contact', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
 
@@ -719,25 +709,27 @@ function updateHeroAnimation() {
   const maxScroll = rect.height - window.innerHeight;
   const rawProgress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
 
-  const contentMoveY = rawProgress * 60;
-  const contentFade = 1 - (rawProgress * 0.22);
+  heroContent.style.transform = `translateY(-${rawProgress * 50}px)`;
+  heroContent.style.opacity = 1 - (rawProgress * 0.2);
 
-  heroContent.style.transform = `translateY(-${contentMoveY}px)`;
-  heroContent.style.opacity = contentFade;
+  const revealStart = 0.12;
+  let revealProgress = 0;
 
-  const revealStart = 0.14;
-  const revealProgress = rawProgress <= revealStart
-    ? 0
-    : (rawProgress - revealStart) / (1 - revealStart);
+  if (rawProgress > revealStart) {
+    revealProgress = (rawProgress - revealStart) / (1 - revealStart);
+  }
 
-  const startY = window.innerHeight + 60;
-  const endY = window.innerHeight - heroPanelsTrack.offsetHeight - 30;
-  const currentY = startY + ((endY - startY) * revealProgress);
+  revealProgress = Math.min(Math.max(revealProgress, 0), 1);
 
+  const startY = window.innerHeight + 80; // below hero
+  const travel = heroPanelsTrack.offsetHeight + window.innerHeight + 160;
+  const currentY = startY - (travel * revealProgress);
+
+  heroPanelsTrack.style.opacity = revealProgress > 0 ? '1' : '0';
   heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
 }
 
-window.addEventListener('scroll', updateHeroAnimation);
+window.addEventListener('scroll', updateHeroAnimation, { passive: true });
 window.addEventListener('resize', updateHeroAnimation);
 window.addEventListener('load', updateHeroAnimation);
 
@@ -757,7 +749,6 @@ function openLightbox(images, startIndex = 0, alt = '') {
   lightboxImages = images;
   lightboxIndex = startIndex;
   lightboxAlt = alt;
-
   updateLightboxImage();
   lightbox.classList.add('active');
   document.body.classList.add('lightbox-open');
@@ -770,7 +761,6 @@ function updateLightboxImage() {
   lightboxImage.alt = lightboxAlt;
 
   const multiple = lightboxImages.length > 1;
-
   lightboxPrev.classList.toggle('hidden', !multiple);
   lightboxNext.classList.toggle('hidden', !multiple);
   lightboxCounter.textContent = multiple ? `${lightboxIndex + 1} / ${lightboxImages.length}` : '';
@@ -788,7 +778,7 @@ function showNextImage() {
   updateLightboxImage();
 }
 
-function closeLightbox(event) {
+function closeLightbox() {
   lightbox.classList.remove('active');
   lightboxImage.src = '';
   lightboxImage.alt = '';
@@ -801,16 +791,11 @@ function closeLightbox(event) {
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('active')) return;
 
-  if (e.key === 'Escape') {
-    closeLightbox();
-  } else if (e.key === 'ArrowLeft') {
-    showPrevImage();
-  } else if (e.key === 'ArrowRight') {
-    showNextImage();
-  }
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') showPrevImage();
+  if (e.key === 'ArrowRight') showNextImage();
 });
 
-/* SWIPE SUPPORT */
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -820,20 +805,11 @@ lightboxStage.addEventListener('touchstart', (e) => {
 
 lightboxStage.addEventListener('touchend', (e) => {
   touchEndX = e.changedTouches[0].clientX;
-  handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
   const swipeDistance = touchEndX - touchStartX;
-
   if (Math.abs(swipeDistance) < 40) return;
-
-  if (swipeDistance > 0) {
-    showPrevImage();
-  } else {
-    showNextImage();
-  }
-}
+  if (swipeDistance > 0) showPrevImage();
+  else showNextImage();
+}, { passive: true });
 </script>
 
 </body>
