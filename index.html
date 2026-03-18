@@ -22,7 +22,7 @@ body.lightbox-open{
 /* HERO */
 .hero-scroll-wrap{
   position:relative;
-  height:430vh;
+  height:520vh;
   z-index:1;
 }
 
@@ -98,6 +98,7 @@ body.lightbox-open{
   position:absolute;
   inset:0;
   z-index:3;
+  overflow:hidden;
   pointer-events:none;
 }
 
@@ -106,9 +107,9 @@ body.lightbox-open{
   left:0;
   right:0;
   top:0;
-  will-change:transform;
-  padding:340px 20px 24px;
+  padding:0 20px 24px;
   box-sizing:border-box;
+  will-change:transform;
 }
 
 .hero-panels-inner{
@@ -382,7 +383,6 @@ footer{
   letter-spacing:0.02em;
 }
 
-/* RESPONSIVE */
 @media (max-width: 1100px){
   .hero-title{
     font-size:25px;
@@ -408,7 +408,7 @@ footer{
   }
 
   .hero-scroll-wrap{
-    height:660vh;
+    height:780vh;
   }
 
   .hero-title{
@@ -418,15 +418,11 @@ footer{
   .hero-copy p{
     font-size:18px;
   }
-
-  .hero-panels-track{
-    padding-top:320px;
-  }
 }
 
 @media (max-width: 768px){
   .hero-scroll-wrap{
-    height:760vh;
+    height:900vh;
   }
 
   .hero-video-desktop{
@@ -464,12 +460,6 @@ footer{
 
   .hero-copy p + p{
     margin-top:6px;
-  }
-
-  .hero-panels-track{
-    padding-top:290px;
-    padding-left:20px;
-    padding-right:20px;
   }
 
   .features{
@@ -556,7 +546,6 @@ footer{
     <div class="hero-panels">
       <div class="hero-panels-track" id="hero-panels-track">
         <div class="hero-panels-inner">
-
           <div class="features">
 
             <div class="feature">
@@ -622,7 +611,6 @@ footer{
             </div>
 
           </div>
-
         </div>
       </div>
     </div>
@@ -729,17 +717,22 @@ const heroPanelsTrack = document.getElementById('hero-panels-track');
 function updateHeroAnimation() {
   const rect = heroWrap.getBoundingClientRect();
   const maxScroll = rect.height - window.innerHeight;
-  const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
+  const rawProgress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
 
-  const contentMoveY = progress * 70;
-  const contentFade = 1 - (progress * 0.28);
+  const contentMoveY = rawProgress * 60;
+  const contentFade = 1 - (rawProgress * 0.22);
 
   heroContent.style.transform = `translateY(-${contentMoveY}px)`;
   heroContent.style.opacity = contentFade;
 
-  const startY = window.innerHeight + 40;
-  const endY = -heroPanelsTrack.offsetHeight + window.innerHeight - 24;
-  const currentY = startY + ((endY - startY) * progress);
+  const revealStart = 0.14;
+  const revealProgress = rawProgress <= revealStart
+    ? 0
+    : (rawProgress - revealStart) / (1 - revealStart);
+
+  const startY = window.innerHeight + 60;
+  const endY = window.innerHeight - heroPanelsTrack.offsetHeight - 30;
+  const currentY = startY + ((endY - startY) * revealProgress);
 
   heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
 }
