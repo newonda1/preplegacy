@@ -19,10 +19,10 @@ body.lightbox-open{
   overflow:hidden;
 }
 
-/* STICKY HERO WRAPPER */
+/* HERO */
 .hero-scroll-wrap{
   position:relative;
-  height:360vh;
+  height:430vh;
   z-index:1;
 }
 
@@ -56,9 +56,9 @@ body.lightbox-open{
 .hero-content{
   position:relative;
   z-index:2;
-  max-width:980px;
+  max-width:1100px;
   margin:0 auto;
-  padding:48px 20px 0;
+  padding:36px 20px 0;
   transition:transform 0.08s linear, opacity 0.08s linear;
   will-change:transform, opacity;
 }
@@ -66,20 +66,21 @@ body.lightbox-open{
 .hero-logo{
   max-width:520px;
   width:90%;
-  margin-bottom:12px;
+  margin:0 auto 10px;
+  display:block;
 }
 
 .hero-title{
+  margin:0;
   font-weight:500;
   font-size:28px;
-  color:#334155;
   line-height:1.3;
-  margin:0;
+  color:#334155;
 }
 
 .hero-copy{
-  max-width:1100px;
   margin:28px auto 0;
+  max-width:1180px;
 }
 
 .hero-copy p{
@@ -95,12 +96,19 @@ body.lightbox-open{
 
 .hero-panels{
   position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+}
+
+.hero-panels-track{
+  position:absolute;
   left:0;
   right:0;
   top:0;
-  z-index:3;
-  padding:44vh 20px 0;
   will-change:transform;
+  padding:340px 20px 24px;
+  box-sizing:border-box;
 }
 
 .hero-panels-inner{
@@ -108,6 +116,69 @@ body.lightbox-open{
   margin:0 auto;
 }
 
+.features{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:36px;
+  margin-top:0;
+}
+
+.feature{
+  background:rgba(255,255,255,0.92);
+  padding:38px;
+  border-radius:24px;
+  box-shadow:0 10px 30px rgba(15,23,42,0.08);
+  text-align:left;
+  min-height:210px;
+  backdrop-filter:blur(4px);
+  pointer-events:auto;
+}
+
+.feature h3{
+  margin-top:0;
+  margin-bottom:20px;
+  color:#0f172a;
+  font-size:32px;
+  line-height:1.15;
+}
+
+.feature p{
+  margin:0 0 24px 0;
+  color:#475569;
+  line-height:1.55;
+  font-size:18px;
+}
+
+.feature-image-button{
+  display:block;
+  width:100%;
+  padding:0;
+  border:none;
+  background:none;
+  cursor:pointer;
+}
+
+.feature-image-button img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  border-radius:16px;
+  box-shadow:0 8px 22px rgba(15,23,42,0.10);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-image-button:hover img{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(15,23,42,0.14);
+}
+
+.feature-image-note{
+  margin-top:12px;
+  font-size:14px;
+  color:#64748b;
+}
+
+/* CONTENT BELOW HERO */
 .section{
   position:relative;
   z-index:5;
@@ -195,67 +266,6 @@ body.lightbox-open{
   margin-top:14px;
   color:#475569;
   min-height:24px;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:36px;
-  margin-top:0;
-}
-
-.feature{
-  background:rgba(255,255,255,0.92);
-  padding:38px;
-  border-radius:24px;
-  box-shadow:0 10px 30px rgba(15,23,42,0.08);
-  text-align:left;
-  min-height:210px;
-  backdrop-filter:blur(4px);
-}
-
-.feature h3{
-  margin-top:0;
-  margin-bottom:20px;
-  color:#0f172a;
-  font-size:32px;
-  line-height:1.15;
-}
-
-.feature p{
-  margin:0 0 24px 0;
-  color:#475569;
-  line-height:1.55;
-  font-size:18px;
-}
-
-.feature-image-button{
-  display:block;
-  width:100%;
-  padding:0;
-  border:none;
-  background:none;
-  cursor:pointer;
-}
-
-.feature-image-button img{
-  display:block;
-  width:100%;
-  max-width:100%;
-  border-radius:16px;
-  box-shadow:0 8px 22px rgba(15,23,42,0.10);
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.feature-image-button:hover img{
-  transform:translateY(-2px);
-  box-shadow:0 12px 28px rgba(15,23,42,0.14);
-}
-
-.feature-image-note{
-  margin-top:12px;
-  font-size:14px;
-  color:#64748b;
 }
 
 .live-demo{
@@ -372,6 +382,7 @@ footer{
   letter-spacing:0.02em;
 }
 
+/* RESPONSIVE */
 @media (max-width: 1100px){
   .hero-title{
     font-size:25px;
@@ -397,11 +408,7 @@ footer{
   }
 
   .hero-scroll-wrap{
-    height:460vh;
-  }
-
-  .hero-content{
-    max-width:760px;
+    height:660vh;
   }
 
   .hero-title{
@@ -412,18 +419,14 @@ footer{
     font-size:18px;
   }
 
-  .hero-panels{
-    padding-top:50vh;
+  .hero-panels-track{
+    padding-top:320px;
   }
 }
 
 @media (max-width: 768px){
   .hero-scroll-wrap{
-    height:520vh;
-  }
-
-  .hero{
-    min-height:100vh;
+    height:760vh;
   }
 
   .hero-video-desktop{
@@ -441,7 +444,7 @@ footer{
   .hero-logo{
     width:84%;
     max-width:420px;
-    margin-bottom:10px;
+    margin-bottom:8px;
   }
 
   .hero-title{
@@ -450,7 +453,7 @@ footer{
   }
 
   .hero-copy{
-    margin-top:20px;
+    margin-top:18px;
     max-width:660px;
   }
 
@@ -463,8 +466,8 @@ footer{
     margin-top:6px;
   }
 
-  .hero-panels{
-    padding-top:45vh;
+  .hero-panels-track{
+    padding-top:290px;
     padding-left:20px;
     padding-right:20px;
   }
@@ -525,7 +528,6 @@ footer{
 <div class="hero-scroll-wrap" id="hero-scroll-wrap">
 
   <header class="hero">
-
     <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
       <source src="videos/hero.mp4" type="video/mp4">
     </video>
@@ -551,70 +553,74 @@ footer{
       </div>
     </div>
 
-    <div class="hero-panels" id="hero-panels">
-      <div class="hero-panels-inner">
-        <div class="features">
+    <div class="hero-panels">
+      <div class="hero-panels-track" id="hero-panels-track">
+        <div class="hero-panels-inner">
 
-          <div class="feature">
-            <h3>Player Career Pages</h3>
-            <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+          <div class="features">
 
-            <button
-              class="feature-image-button"
-              type="button"
-              onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
-              aria-label="Open full-size Player Career Pages example"
-            >
-              <img
-                src="images/player_career_pages_mini.png"
-                alt="Player Career Pages preview"
+            <div class="feature">
+              <h3>Player Career Pages</h3>
+              <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
+                aria-label="Open full-size Player Career Pages example"
               >
-            </button>
+                <img
+                  src="images/player_career_pages_mini.png"
+                  alt="Player Career Pages preview"
+                >
+              </button>
 
-            <div class="feature-image-note">Tap image to enlarge</div>
-          </div>
+              <div class="feature-image-note">Tap image to enlarge</div>
+            </div>
 
-          <div class="feature">
-            <h3>Season Histories</h3>
-            <p>View complete season records, schedules, and playoff brackets.</p>
+            <div class="feature">
+              <h3>Season Histories</h3>
+              <p>View complete season records, schedules, and playoff brackets.</p>
 
-            <button
-              class="feature-image-button"
-              type="button"
-              onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
-              aria-label="Open full-size Season Histories example"
-            >
-              <img
-                src="images/season_histories_mini.png"
-                alt="Season Histories preview"
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
+                aria-label="Open full-size Season Histories example"
               >
-            </button>
+                <img
+                  src="images/season_histories_mini.png"
+                  alt="Season Histories preview"
+                >
+              </button>
 
-            <div class="feature-image-note">Tap image to enlarge</div>
-          </div>
+              <div class="feature-image-note">Tap image to enlarge</div>
+            </div>
 
-          <div class="feature">
-            <h3>Program Records</h3>
-            <p>Automatically calculate and display all-time records for your program.</p>
+            <div class="feature">
+              <h3>Program Records</h3>
+              <p>Automatically calculate and display all-time records for your program.</p>
 
-            <button
-              class="feature-image-button"
-              type="button"
-              onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
-              aria-label="Open Program Records gallery"
-            >
-              <img
-                src="images/program_records_mini.png"
-                alt="Program Records preview"
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
+                aria-label="Open Program Records gallery"
               >
-            </button>
+                <img
+                  src="images/program_records_mini.png"
+                  alt="Program Records preview"
+                >
+              </button>
 
-            <div class="feature-image-note">Tap image to view more</div>
-          </div>
+              <div class="feature-image-note">Tap image to view more</div>
+            </div>
 
-          <div class="feature">
-            <h3>Historical Archive</h3>
-            <p>Preserve decades of program history in one organized place.</p>
+            <div class="feature">
+              <h3>Historical Archive</h3>
+              <p>Preserve decades of program history in one organized place.</p>
+            </div>
+
           </div>
 
         </div>
@@ -714,24 +720,33 @@ form.addEventListener('submit', async (e) => {
   } catch (error) {
     status.textContent = 'Something went wrong. Please try again.';
   }
-});
+}
 
 const heroWrap = document.getElementById('hero-scroll-wrap');
 const heroContent = document.getElementById('hero-content');
-const heroPanels = document.getElementById('hero-panels');
+const heroPanelsTrack = document.getElementById('hero-panels-track');
 
-window.addEventListener('scroll', () => {
+function updateHeroAnimation() {
   const rect = heroWrap.getBoundingClientRect();
-  const progress = Math.min(Math.max(-rect.top / (rect.height - window.innerHeight), 0), 1);
+  const maxScroll = rect.height - window.innerHeight;
+  const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
 
-  const contentMoveY = progress * 120;
-  const contentFade = 1 - (progress * 0.35);
-  const panelsMoveY = progress * -340;
+  const contentMoveY = progress * 70;
+  const contentFade = 1 - (progress * 0.28);
 
   heroContent.style.transform = `translateY(-${contentMoveY}px)`;
   heroContent.style.opacity = contentFade;
-  heroPanels.style.transform = `translateY(${panelsMoveY}px)`;
-});
+
+  const startY = window.innerHeight + 40;
+  const endY = -heroPanelsTrack.offsetHeight + window.innerHeight - 24;
+  const currentY = startY + ((endY - startY) * progress);
+
+  heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
+}
+
+window.addEventListener('scroll', updateHeroAnimation);
+window.addEventListener('resize', updateHeroAnimation);
+window.addEventListener('load', updateHeroAnimation);
 
 /* LIGHTBOX GALLERY */
 const lightbox = document.getElementById('lightbox');
