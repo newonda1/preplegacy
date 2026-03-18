@@ -20,16 +20,9 @@ body.lightbox-open{
 }
 
 /* HERO */
-.hero-scroll-wrap{
-  position:relative;
-  height:520vh;
-  z-index:1;
-}
-
 .hero{
-  position:sticky;
-  top:0;
-  height:100vh;
+  position:relative;
+  min-height:100vh;
   overflow:hidden;
 }
 
@@ -58,9 +51,7 @@ body.lightbox-open{
   z-index:2;
   max-width:1100px;
   margin:0 auto;
-  padding:36px 20px 0;
-  transition:transform 0.08s linear, opacity 0.08s linear;
-  will-change:transform, opacity;
+  padding:36px 20px 220px;
 }
 
 .hero-logo{
@@ -94,47 +85,29 @@ body.lightbox-open{
   margin-top:8px;
 }
 
-.hero-panels{
-  position:absolute;
-  inset:0;
+/* FEATURE CARDS SECTION */
+.hero-cards-section{
+  position:relative;
   z-index:3;
-  overflow:hidden;
-  pointer-events:none;
-}
-
-.hero-panels-track{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  padding:0 20px 24px;
-  box-sizing:border-box;
-  will-change:transform, opacity;
-  opacity:0;
-  transform:translateY(120vh);
-}
-
-.hero-panels-inner{
   max-width:1200px;
-  margin:0 auto;
+  margin:-160px auto 0;
+  padding:0 20px;
 }
 
 .features{
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:36px;
-  margin-top:0;
 }
 
 .feature{
-  background:rgba(255,255,255,0.92);
+  background:rgba(255,255,255,0.94);
   padding:38px;
   border-radius:24px;
   box-shadow:0 10px 30px rgba(15,23,42,0.08);
   text-align:left;
   min-height:210px;
   backdrop-filter:blur(4px);
-  pointer-events:auto;
 }
 
 .feature h3{
@@ -181,7 +154,7 @@ body.lightbox-open{
   color:#64748b;
 }
 
-/* CONTENT BELOW HERO */
+/* CONTENT BELOW */
 .section{
   position:relative;
   z-index:5;
@@ -409,24 +382,16 @@ footer{
     font-size:28px;
   }
 
-  .hero-scroll-wrap{
-    height:760vh;
-  }
-
-  .hero-title{
-    font-size:24px;
-  }
-
   .hero-copy p{
     font-size:18px;
+  }
+
+  .hero-cards-section{
+    margin-top:-120px;
   }
 }
 
 @media (max-width: 768px){
-  .hero-scroll-wrap{
-    height:900vh;
-  }
-
   .hero-video-desktop{
     display:none;
   }
@@ -436,7 +401,7 @@ footer{
   }
 
   .hero-content{
-    padding:30px 20px 0;
+    padding:30px 20px 180px;
   }
 
   .hero-logo{
@@ -462,6 +427,11 @@ footer{
 
   .hero-copy p + p{
     margin-top:6px;
+  }
+
+  .hero-cards-section{
+    margin-top:-90px;
+    padding:0 20px;
   }
 
   .features{
@@ -517,75 +487,87 @@ footer{
 
 <body>
 
-<div class="hero-scroll-wrap" id="hero-scroll-wrap">
+<header class="hero">
+  <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
+    <source src="videos/hero.mp4" type="video/mp4">
+  </video>
 
-  <header class="hero">
-    <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
-      <source src="videos/hero.mp4" type="video/mp4">
-    </video>
+  <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
+    <source src="videos/hero-mobile.mp4" type="video/mp4">
+  </video>
 
-    <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
-      <source src="videos/hero-mobile.mp4" type="video/mp4">
-    </video>
+  <div class="hero-overlay"></div>
 
-    <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
 
-    <div class="hero-content" id="hero-content">
-      <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
+    <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
 
-      <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
+    <div class="hero-copy">
+      <p>Build a complete digital record book for your athletic program.</p>
+      <p>Track player careers, season results, game statistics, and all-time records in one place.</p>
+    </div>
+  </div>
+</header>
 
-      <div class="hero-copy">
-        <p>Build a complete digital record book for your athletic program.</p>
-        <p>Track player careers, season results, game statistics, and all-time records in one place.</p>
-      </div>
+<section class="hero-cards-section">
+  <div class="features">
+
+    <div class="feature">
+      <h3>Player Career Pages</h3>
+      <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+
+      <button
+        class="feature-image-button"
+        type="button"
+        onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
+        aria-label="Open full-size Player Career Pages example"
+      >
+        <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
+      </button>
+
+      <div class="feature-image-note">Tap image to enlarge</div>
     </div>
 
-    <div class="hero-panels">
-      <div class="hero-panels-track" id="hero-panels-track">
-        <div class="hero-panels-inner">
-          <div class="features">
+    <div class="feature">
+      <h3>Season Histories</h3>
+      <p>View complete season records, schedules, and playoff brackets.</p>
 
-            <div class="feature">
-              <h3>Player Career Pages</h3>
-              <p>Track the full career of every athlete with detailed statistics and game logs.</p>
-              <button class="feature-image-button" type="button" onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')" aria-label="Open full-size Player Career Pages example">
-                <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
-              </button>
-              <div class="feature-image-note">Tap image to enlarge</div>
-            </div>
+      <button
+        class="feature-image-button"
+        type="button"
+        onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
+        aria-label="Open full-size Season Histories example"
+      >
+        <img src="images/season_histories_mini.png" alt="Season Histories preview">
+      </button>
 
-            <div class="feature">
-              <h3>Season Histories</h3>
-              <p>View complete season records, schedules, and playoff brackets.</p>
-              <button class="feature-image-button" type="button" onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')" aria-label="Open full-size Season Histories example">
-                <img src="images/season_histories_mini.png" alt="Season Histories preview">
-              </button>
-              <div class="feature-image-note">Tap image to enlarge</div>
-            </div>
-
-            <div class="feature">
-              <h3>Program Records</h3>
-              <p>Automatically calculate and display all-time records for your program.</p>
-              <button class="feature-image-button" type="button" onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')" aria-label="Open Program Records gallery">
-                <img src="images/program_records_mini.png" alt="Program Records preview">
-              </button>
-              <div class="feature-image-note">Tap image to view more</div>
-            </div>
-
-            <div class="feature">
-              <h3>Historical Archive</h3>
-              <p>Preserve decades of program history in one organized place.</p>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      <div class="feature-image-note">Tap image to enlarge</div>
     </div>
 
-  </header>
+    <div class="feature">
+      <h3>Program Records</h3>
+      <p>Automatically calculate and display all-time records for your program.</p>
 
-</div>
+      <button
+        class="feature-image-button"
+        type="button"
+        onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
+        aria-label="Open Program Records gallery"
+      >
+        <img src="images/program_records_mini.png" alt="Program Records preview">
+      </button>
+
+      <div class="feature-image-note">Tap image to view more</div>
+    </div>
+
+    <div class="feature">
+      <h3>Historical Archive</h3>
+      <p>Preserve decades of program history in one organized place.</p>
+    </div>
+
+  </div>
+</section>
 
 <section class="section demo-section">
   <button class="button" type="button" onclick="toggleForm()">Request a Demo</button>
@@ -619,7 +601,7 @@ footer{
   <p>© PrepLegacy</p>
 </footer>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <div class="lightbox-content" onclick="event.stopPropagation()">
     <button class="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close image">&times;</button>
     <button class="lightbox-nav lightbox-prev hidden" id="lightbox-prev" type="button" onclick="showPrevImage()" aria-label="Previous image">&#8249;</button>
@@ -674,36 +656,6 @@ form.addEventListener('submit', async (e) => {
     status.textContent = 'Something went wrong. Please try again.';
   }
 }
-
-const heroWrap = document.getElementById('hero-scroll-wrap');
-const heroContent = document.getElementById('hero-content');
-const heroPanelsTrack = document.getElementById('hero-panels-track');
-
-function updateHeroAnimation() {
-  const rect = heroWrap.getBoundingClientRect();
-  const maxScroll = rect.height - window.innerHeight;
-  const rawProgress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
-
-  heroContent.style.transform = `translateY(-${rawProgress * 50}px)`;
-  heroContent.style.opacity = 1 - (rawProgress * 0.2);
-
-  const revealStart = 0.10;
-  const revealProgress = rawProgress <= revealStart
-    ? 0
-    : Math.min((rawProgress - revealStart) / (1 - revealStart), 1);
-
-  const trackHeight = heroPanelsTrack.offsetHeight;
-  const startY = window.innerHeight + 40;
-  const endY = -(trackHeight - window.innerHeight + 40);
-  const currentY = startY + ((endY - startY) * revealProgress);
-
-  heroPanelsTrack.style.opacity = revealProgress > 0 ? '1' : '0';
-  heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
-}
-
-window.addEventListener('scroll', updateHeroAnimation, { passive: true });
-window.addEventListener('resize', updateHeroAnimation);
-window.addEventListener('load', updateHeroAnimation);
 
 /* LIGHTBOX GALLERY */
 const lightbox = document.getElementById('lightbox');
