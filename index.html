@@ -111,7 +111,7 @@ body.lightbox-open{
   box-sizing:border-box;
   will-change:transform, opacity;
   opacity:0;
-  transform:translateY(110vh); /* fully below screen on load */
+  transform:translateY(120vh);
 }
 
 .hero-panels-inner{
@@ -531,11 +531,7 @@ footer{
     <div class="hero-overlay"></div>
 
     <div class="hero-content" id="hero-content">
-      <img
-        src="images/preplegacy-logo.png"
-        alt="PrepLegacy Logo"
-        class="hero-logo"
-      >
+      <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
 
       <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
 
@@ -553,48 +549,27 @@ footer{
             <div class="feature">
               <h3>Player Career Pages</h3>
               <p>Track the full career of every athlete with detailed statistics and game logs.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
-                aria-label="Open full-size Player Career Pages example"
-              >
+              <button class="feature-image-button" type="button" onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')" aria-label="Open full-size Player Career Pages example">
                 <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
               </button>
-
               <div class="feature-image-note">Tap image to enlarge</div>
             </div>
 
             <div class="feature">
               <h3>Season Histories</h3>
               <p>View complete season records, schedules, and playoff brackets.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
-                aria-label="Open full-size Season Histories example"
-              >
+              <button class="feature-image-button" type="button" onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')" aria-label="Open full-size Season Histories example">
                 <img src="images/season_histories_mini.png" alt="Season Histories preview">
               </button>
-
               <div class="feature-image-note">Tap image to enlarge</div>
             </div>
 
             <div class="feature">
               <h3>Program Records</h3>
               <p>Automatically calculate and display all-time records for your program.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
-                aria-label="Open Program Records gallery"
-              >
+              <button class="feature-image-button" type="button" onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')" aria-label="Open Program Records gallery">
                 <img src="images/program_records_mini.png" alt="Program Records preview">
               </button>
-
               <div class="feature-image-note">Tap image to view more</div>
             </div>
 
@@ -712,18 +687,15 @@ function updateHeroAnimation() {
   heroContent.style.transform = `translateY(-${rawProgress * 50}px)`;
   heroContent.style.opacity = 1 - (rawProgress * 0.2);
 
-  const revealStart = 0.12;
-  let revealProgress = 0;
+  const revealStart = 0.10;
+  const revealProgress = rawProgress <= revealStart
+    ? 0
+    : Math.min((rawProgress - revealStart) / (1 - revealStart), 1);
 
-  if (rawProgress > revealStart) {
-    revealProgress = (rawProgress - revealStart) / (1 - revealStart);
-  }
-
-  revealProgress = Math.min(Math.max(revealProgress, 0), 1);
-
-  const startY = window.innerHeight + 80; // below hero
-  const travel = heroPanelsTrack.offsetHeight + window.innerHeight + 160;
-  const currentY = startY - (travel * revealProgress);
+  const trackHeight = heroPanelsTrack.offsetHeight;
+  const startY = window.innerHeight + 40;
+  const endY = -(trackHeight - window.innerHeight + 40);
+  const currentY = startY + ((endY - startY) * revealProgress);
 
   heroPanelsTrack.style.opacity = revealProgress > 0 ? '1' : '0';
   heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
@@ -790,7 +762,6 @@ function closeLightbox() {
 
 document.addEventListener('keydown', (e) => {
   if (!lightbox.classList.contains('active')) return;
-
   if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowLeft') showPrevImage();
   if (e.key === 'ArrowRight') showNextImage();
