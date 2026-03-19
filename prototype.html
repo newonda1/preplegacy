@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrepLegacy Prototype</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f8fafc;
+  color:#0f172a;
+  text-align:center;
+}
+
+.hero-scroll-wrap{
+  position:relative;
+  height:420vh;
+}
+
+.hero{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+}
+
+.hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.hero-video-mobile{
+  display:none;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(248,250,252,0.72);
+  z-index:1;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:1100px;
+  margin:0 auto;
+  padding:36px 20px 0;
+  transition:transform 0.08s linear, opacity 0.08s linear;
+  will-change:transform, opacity;
+}
+
+.hero-logo{
+  max-width:520px;
+  width:90%;
+  margin:0 auto 10px;
+  display:block;
+}
+
+.hero-title{
+  margin:0;
+  font-weight:500;
+  font-size:28px;
+  line-height:1.3;
+  color:#334155;
+}
+
+.hero-copy{
+  margin:28px auto 0;
+  max-width:1180px;
+}
+
+.hero-copy p{
+  margin:0;
+  font-size:26px;
+  line-height:1.45;
+  color:#475569;
+}
+
+.hero-copy p + p{
+  margin-top:8px;
+}
+
+.hero-panels{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.hero-panels-track{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  transform:translateY(110vh);
+  will-change:transform;
+  padding:0 20px 24px;
+  box-sizing:border-box;
+}
+
+.hero-panels-inner{
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:36px;
+}
+
+.feature{
+  background:rgba(255,255,255,0.94);
+  padding:38px;
+  border-radius:24px;
+  box-shadow:0 10px 30px rgba(15,23,42,0.08);
+  text-align:left;
+  min-height:210px;
+  backdrop-filter:blur(4px);
+}
+
+.feature h3{
+  margin:0 0 18px 0;
+  color:#0f172a;
+  font-size:32px;
+  line-height:1.15;
+}
+
+.feature p{
+  margin:0;
+  color:#475569;
+  line-height:1.55;
+  font-size:18px;
+}
+
+.prototype-section{
+  max-width:1000px;
+  margin:0 auto;
+  padding:80px 20px;
+}
+
+.prototype-section h2{
+  margin:0 0 14px 0;
+  font-size:36px;
+  color:#0f172a;
+}
+
+.prototype-section p{
+  max-width:760px;
+  margin:0 auto;
+  font-size:18px;
+  line-height:1.7;
+  color:#475569;
+}
+
+footer{
+  padding:40px;
+  color:#64748b;
+}
+
+@media (max-width: 1100px){
+  .hero-title{
+    font-size:25px;
+  }
+
+  .hero-copy p{
+    font-size:22px;
+  }
+}
+
+@media (max-width: 900px){
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .feature{
+    text-align:center;
+    min-height:auto;
+  }
+
+  .feature h3{
+    font-size:28px;
+  }
+
+  .hero-scroll-wrap{
+    height:620vh;
+  }
+
+  .hero-copy p{
+    font-size:18px;
+  }
+}
+
+@media (max-width: 768px){
+  .hero-video-desktop{
+    display:none;
+  }
+
+  .hero-video-mobile{
+    display:block;
+  }
+
+  .hero-scroll-wrap{
+    height:720vh;
+  }
+
+  .hero-content{
+    padding:30px 20px 0;
+  }
+
+  .hero-logo{
+    width:84%;
+    max-width:420px;
+    margin-bottom:8px;
+  }
+
+  .hero-title{
+    font-size:19px;
+    line-height:1.35;
+  }
+
+  .hero-copy{
+    margin-top:18px;
+    max-width:660px;
+  }
+
+  .hero-copy p{
+    font-size:16px;
+    line-height:1.5;
+  }
+
+  .hero-copy p + p{
+    margin-top:6px;
+  }
+
+  .features{
+    gap:28px;
+  }
+
+  .feature{
+    padding:30px 24px;
+    border-radius:22px;
+  }
+
+  .prototype-section h2{
+    font-size:30px;
+  }
+
+  .prototype-section p{
+    font-size:17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero-scroll-wrap" id="hero-scroll-wrap">
+  <header class="hero">
+    <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
+      <source src="videos/hero.mp4" type="video/mp4">
+    </video>
+
+    <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
+      <source src="videos/hero-mobile.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content" id="hero-content">
+      <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
+
+      <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
+
+      <div class="hero-copy">
+        <p>Build a complete digital record book for your athletic program.</p>
+        <p>Track player careers, season results, game statistics, and all-time records in one place.</p>
+      </div>
+    </div>
+
+    <div class="hero-panels">
+      <div class="hero-panels-track" id="hero-panels-track">
+        <div class="hero-panels-inner">
+          <div class="features">
+            <div class="feature">
+              <h3>Player Career Pages</h3>
+              <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+            </div>
+
+            <div class="feature">
+              <h3>Season Histories</h3>
+              <p>View complete season records, schedules, and playoff brackets.</p>
+            </div>
+
+            <div class="feature">
+              <h3>Program Records</h3>
+              <p>Automatically calculate and display all-time records for your program.</p>
+            </div>
+
+            <div class="feature">
+              <h3>Historical Archive</h3>
+              <p>Preserve decades of program history in one organized place.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<section class="prototype-section">
+  <h2>Prototype Checkpoint</h2>
+  <p>
+    This section is only here so you can verify that the cards fully clear the hero before the next content begins.
+  </p>
+</section>
+
+<footer>
+  <p>PrepLegacy Prototype</p>
+</footer>
+
+<script>
+const heroWrap = document.getElementById('hero-scroll-wrap');
+const heroContent = document.getElementById('hero-content');
+const heroPanelsTrack = document.getElementById('hero-panels-track');
+
+function updateHeroPrototype() {
+  const rect = heroWrap.getBoundingClientRect();
+  const maxScroll = rect.height - window.innerHeight;
+  const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
+
+  const contentMove = progress * 70;
+  const contentFade = 1 - (progress * 0.22);
+
+  heroContent.style.transform = `translateY(-${contentMove}px)`;
+  heroContent.style.opacity = contentFade;
+
+  const revealStart = window.innerWidth <= 768 ? 0.10 : 0.12;
+  const revealProgress = progress <= revealStart
+    ? 0
+    : Math.min((progress - revealStart) / (1 - revealStart), 1);
+
+  const trackHeight = heroPanelsTrack.offsetHeight;
+  const startY = window.innerHeight + 40;
+  const endY = -(trackHeight - window.innerHeight + 40);
+  const currentY = startY + ((endY - startY) * revealProgress);
+
+  heroPanelsTrack.style.transform = `translateY(${currentY}px)`;
+}
+
+window.addEventListener('scroll', updateHeroPrototype, { passive: true });
+window.addEventListener('resize', updateHeroPrototype);
+window.addEventListener('load', updateHeroPrototype);
+</script>
+
+</body>
+</html>
