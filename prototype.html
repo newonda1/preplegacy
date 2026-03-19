@@ -14,6 +14,10 @@ body{
   text-align:center;
 }
 
+body.lightbox-open{
+  overflow:hidden;
+}
+
 .hero-scroll-wrap{
   position:relative;
   height:420vh;
@@ -127,10 +131,39 @@ body{
 }
 
 .feature p{
-  margin:0;
+  margin:0 0 24px 0;
   color:#475569;
   line-height:1.55;
   font-size:18px;
+}
+
+.feature-image-button{
+  display:block;
+  width:100%;
+  padding:0;
+  border:none;
+  background:none;
+  cursor:pointer;
+}
+
+.feature-image-button img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  border-radius:16px;
+  box-shadow:0 8px 22px rgba(15,23,42,0.10);
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-image-button:hover img{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(15,23,42,0.14);
+}
+
+.feature-image-note{
+  margin-top:12px;
+  font-size:14px;
+  color:#64748b;
 }
 
 .prototype-section{
@@ -156,6 +189,108 @@ body{
 footer{
   padding:40px;
   color:#64748b;
+}
+
+/* LIGHTBOX / GALLERY */
+.lightbox{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(15,23,42,0.84);
+  z-index:1000;
+}
+
+.lightbox.active{
+  display:flex;
+}
+
+.lightbox-content{
+  position:relative;
+  width:min(1100px, 94vw);
+  max-height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox-stage{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox-content img{
+  display:block;
+  max-width:100%;
+  max-height:90vh;
+  border-radius:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  background:white;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.lightbox-close{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#0f172a;
+  font-size:26px;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  z-index:3;
+}
+
+.lightbox-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:50px;
+  height:50px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,0.94);
+  color:#0f172a;
+  font-size:30px;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.lightbox-prev{
+  left:-18px;
+}
+
+.lightbox-next{
+  right:-18px;
+}
+
+.lightbox-nav.hidden{
+  display:none;
+}
+
+.lightbox-counter{
+  position:absolute;
+  bottom:-34px;
+  left:50%;
+  transform:translateX(-50%);
+  color:white;
+  font-size:14px;
+  letter-spacing:0.02em;
 }
 
 @media (max-width: 1100px){
@@ -254,6 +389,37 @@ footer{
   .prototype-section p{
     font-size:17px;
   }
+
+  .lightbox{
+    padding:16px;
+  }
+
+  .lightbox-close{
+    top:-10px;
+    right:-10px;
+    width:38px;
+    height:38px;
+    font-size:24px;
+  }
+
+  .lightbox-nav{
+    width:42px;
+    height:42px;
+    font-size:24px;
+  }
+
+  .lightbox-prev{
+    left:-8px;
+  }
+
+  .lightbox-next{
+    right:-8px;
+  }
+
+  .lightbox-counter{
+    bottom:-28px;
+    font-size:13px;
+  }
 }
 </style>
 </head>
@@ -290,16 +456,49 @@ footer{
             <div class="feature">
               <h3>Player Career Pages</h3>
               <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
+                aria-label="Open full-size Player Career Pages example"
+              >
+                <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to enlarge</div>
             </div>
 
             <div class="feature">
               <h3>Season Histories</h3>
               <p>View complete season records, schedules, and playoff brackets.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
+                aria-label="Open full-size Season Histories example"
+              >
+                <img src="images/season_histories_mini.png" alt="Season Histories preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to enlarge</div>
             </div>
 
             <div class="feature">
               <h3>Program Records</h3>
               <p>Automatically calculate and display all-time records for your program.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
+                aria-label="Open Program Records gallery"
+              >
+                <img src="images/program_records_mini.png" alt="Program Records preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to view more</div>
             </div>
 
             <div class="feature">
@@ -324,6 +523,20 @@ footer{
   <p>PrepLegacy Prototype</p>
 </footer>
 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <button class="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close image">&times;</button>
+    <button class="lightbox-nav lightbox-prev hidden" id="lightbox-prev" type="button" onclick="showPrevImage()" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox-nav lightbox-next hidden" id="lightbox-next" type="button" onclick="showNextImage()" aria-label="Next image">&#8250;</button>
+
+    <div class="lightbox-stage" id="lightbox-stage">
+      <img id="lightbox-image" src="" alt="">
+    </div>
+
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+</div>
+
 <script>
 const heroWrap = document.getElementById('hero-scroll-wrap');
 const heroMovingLayer = document.getElementById('hero-moving-layer');
@@ -343,6 +556,83 @@ function updateHeroPrototype() {
 window.addEventListener('scroll', updateHeroPrototype, { passive: true });
 window.addEventListener('resize', updateHeroPrototype);
 window.addEventListener('load', updateHeroPrototype);
+
+/* LIGHTBOX GALLERY */
+const lightbox = document.getElementById('lightbox');
+const lightboxImage = document.getElementById('lightbox-image');
+const lightboxPrev = document.getElementById('lightbox-prev');
+const lightboxNext = document.getElementById('lightbox-next');
+const lightboxCounter = document.getElementById('lightbox-counter');
+const lightboxStage = document.getElementById('lightbox-stage');
+
+let lightboxImages = [];
+let lightboxIndex = 0;
+let lightboxAlt = '';
+
+function openLightbox(images, startIndex = 0, alt = '') {
+  lightboxImages = images;
+  lightboxIndex = startIndex;
+  lightboxAlt = alt;
+  updateLightboxImage();
+  lightbox.classList.add('active');
+  document.body.classList.add('lightbox-open');
+}
+
+function updateLightboxImage() {
+  if (!lightboxImages.length) return;
+
+  lightboxImage.src = lightboxImages[lightboxIndex];
+  lightboxImage.alt = lightboxAlt;
+
+  const multiple = lightboxImages.length > 1;
+  lightboxPrev.classList.toggle('hidden', !multiple);
+  lightboxNext.classList.toggle('hidden', !multiple);
+  lightboxCounter.textContent = multiple ? `${lightboxIndex + 1} / ${lightboxImages.length}` : '';
+}
+
+function showPrevImage() {
+  if (lightboxImages.length <= 1) return;
+  lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+  updateLightboxImage();
+}
+
+function showNextImage() {
+  if (lightboxImages.length <= 1) return;
+  lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+  updateLightboxImage();
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  lightboxImage.src = '';
+  lightboxImage.alt = '';
+  lightboxCounter.textContent = '';
+  lightboxImages = [];
+  lightboxIndex = 0;
+  document.body.classList.remove('lightbox-open');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') showPrevImage();
+  if (e.key === 'ArrowRight') showNextImage();
+});
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+lightboxStage.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].clientX;
+}, { passive: true });
+
+lightboxStage.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].clientX;
+  const swipeDistance = touchEndX - touchStartX;
+  if (Math.abs(swipeDistance) < 40) return;
+  if (swipeDistance > 0) showPrevImage();
+  else showNextImage();
+}, { passive: true });
 </script>
 
 </body>
