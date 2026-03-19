@@ -337,17 +337,19 @@ function updateHeroPrototype() {
   const maxScroll = rect.height - window.innerHeight;
   const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
 
-  const contentMove = progress * 70;
-  const contentFade = 1 - (progress * 0.22);
-
-  heroContent.style.transform = `translateY(-${contentMove}px)`;
-  heroContent.style.opacity = contentFade;
-
   const revealStart = window.innerWidth <= 768 ? 0.10 : 0.12;
   const revealProgress = progress <= revealStart
     ? 0
     : Math.min((progress - revealStart) / (1 - revealStart), 1);
 
+  /* Make intro block move on same timeline as cards */
+  const contentMove = revealProgress * 220;
+  const contentFade = 1 - (revealProgress * 0.55);
+
+  heroContent.style.transform = `translateY(-${contentMove}px)`;
+  heroContent.style.opacity = contentFade;
+
+  /* Cards */
   const trackHeight = heroPanelsTrack.offsetHeight;
   const startY = window.innerHeight + 40;
   const endY = -(trackHeight - window.innerHeight + 40);
