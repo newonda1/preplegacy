@@ -6,6 +6,13 @@
 <title>PrepLegacy</title>
 
 <style>
+:root{
+  --school-primary:#003A8F;
+  --school-secondary:#FFFFFF;
+  --school-accent:#000000;
+  --school-neutral:#6B7280;
+}
+
 body{
   margin:0;
   font-family:Arial, Helvetica, sans-serif;
@@ -176,8 +183,8 @@ body.lightbox-open{
   display:inline-block;
   margin-top:30px;
   padding:15px 30px;
-  background:#2563eb;
-  color:white;
+  background:var(--school-primary);
+  color:var(--school-secondary);
   text-decoration:none;
   border-radius:10px;
   font-weight:bold;
@@ -190,10 +197,12 @@ body.lightbox-open{
 .button:hover{
   transform:translateY(-2px);
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  opacity:0.92;
 }
 
 .button.secondary{
-  background:#475569;
+  background:var(--school-accent);
+  color:var(--school-secondary);
   margin-top:12px;
 }
 
@@ -229,8 +238,8 @@ body.lightbox-open{
 .contact-form input:focus,
 .contact-form textarea:focus{
   outline:none;
-  border-color:#2563eb;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.12);
+  border-color:var(--school-primary);
+  box-shadow:0 0 0 3px rgba(0,58,143,0.12);
 }
 
 #form-status{
@@ -743,53 +752,6 @@ lightboxStage.addEventListener('touchend', (e) => {
   if (swipeDistance > 0) showPrevImage();
   else showNextImage();
 }, { passive: true });
-</script>
-
-<script type="module">
-  import { getCurrentSchool } from "./js/getCurrentSchool.js";
-
-  async function testSchoolLoader() {
-    try {
-      const school = await getCurrentSchool();
-      console.log("Current school loaded:", school);
-
-      const testBanner = document.createElement("div");
-      testBanner.style.position = "fixed";
-      testBanner.style.bottom = "16px";
-      testBanner.style.right = "16px";
-      testBanner.style.background = "#003A8F";
-      testBanner.style.color = "#FFFFFF";
-      testBanner.style.padding = "10px 14px";
-      testBanner.style.borderRadius = "10px";
-      testBanner.style.fontFamily = "Arial, Helvetica, sans-serif";
-      testBanner.style.fontSize = "14px";
-      testBanner.style.zIndex = "9999";
-      testBanner.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
-      testBanner.textContent = `School loaded: ${school.name} (${school.slug})`;
-
-      document.body.appendChild(testBanner);
-    } catch (error) {
-      console.error("School loader test failed:", error);
-
-      const errorBanner = document.createElement("div");
-      errorBanner.style.position = "fixed";
-      errorBanner.style.bottom = "16px";
-      errorBanner.style.right = "16px";
-      errorBanner.style.background = "#b91c1c";
-      errorBanner.style.color = "#FFFFFF";
-      errorBanner.style.padding = "10px 14px";
-      errorBanner.style.borderRadius = "10px";
-      errorBanner.style.fontFamily = "Arial, Helvetica, sans-serif";
-      errorBanner.style.fontSize = "14px";
-      errorBanner.style.zIndex = "9999";
-      errorBanner.style.boxShadow = "0 8px 20px rgba(0,0,0,0.15)";
-      errorBanner.textContent = `School loader failed`;
-
-      document.body.appendChild(errorBanner);
-    }
-  }
-
-  testSchoolLoader();
 </script>
 
 <script type="module">
