@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PrepLegacy</title>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<title>PrepLegacy Prototype</title>
 
 <style>
 body{
-  font-family: Arial, Helvetica, sans-serif;
   margin:0;
+  font-family:Arial, Helvetica, sans-serif;
   background:#f8fafc;
   color:#0f172a;
   text-align:center;
@@ -19,13 +18,16 @@ body.lightbox-open{
   overflow:hidden;
 }
 
-/* HERO */
-.hero{
+.hero-scroll-wrap{
   position:relative;
-  min-height:100vh;
+  height:420vh;
+}
+
+.hero{
+  position:sticky;
+  top:0;
+  height:100vh;
   overflow:hidden;
-  display:flex;
-  align-items:flex-start;
 }
 
 .hero-video{
@@ -48,12 +50,19 @@ body.lightbox-open{
   z-index:1;
 }
 
-.hero-content{
-  position:relative;
+.hero-moving-layer{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
   z-index:2;
+  will-change:transform;
+}
+
+.hero-content{
   max-width:1100px;
   margin:0 auto;
-  padding:36px 20px 80px;
+  padding:36px 20px 0;
 }
 
 .hero-logo{
@@ -87,14 +96,15 @@ body.lightbox-open{
   margin-top:8px;
 }
 
-/* FEATURE CARDS SECTION */
-.hero-cards-section{
-  position:relative;
-  z-index:3;
+.hero-panels{
+  margin-top:140px;
+  padding:0 20px 24px;
+  box-sizing:border-box;
+}
+
+.hero-panels-inner{
   max-width:1200px;
-  margin:40px auto 0;
-  padding:0 20px;
-  will-change:transform;
+  margin:0 auto;
 }
 
 .features{
@@ -114,8 +124,7 @@ body.lightbox-open{
 }
 
 .feature h3{
-  margin-top:0;
-  margin-bottom:20px;
+  margin:0 0 18px 0;
   color:#0f172a;
   font-size:32px;
   line-height:1.15;
@@ -157,32 +166,10 @@ body.lightbox-open{
   color:#64748b;
 }
 
-/* CONTENT BELOW */
-.section{
-  position:relative;
-  z-index:5;
-  background:#f8fafc;
-  padding:70px 20px;
+.bottom-section{
   max-width:1000px;
-  margin:auto;
-}
-
-.demo-section{
-  padding-top:90px;
-}
-
-.section-title{
-  font-size:36px;
-  color:#0f172a;
-  margin-bottom:14px;
-}
-
-.section-copy{
-  max-width:760px;
   margin:0 auto;
-  font-size:18px;
-  line-height:1.7;
-  color:#475569;
+  padding:80px 20px;
 }
 
 .button{
@@ -203,6 +190,11 @@ body.lightbox-open{
 .button:hover{
   transform:translateY(-2px);
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.button.secondary{
+  background:#475569;
+  margin-top:12px;
 }
 
 .contact-form{
@@ -247,14 +239,7 @@ body.lightbox-open{
   min-height:24px;
 }
 
-.live-demo{
-  margin-top:20px;
-}
-
 footer{
-  position:relative;
-  z-index:5;
-  background:#f8fafc;
   padding:40px;
   color:#64748b;
 }
@@ -377,20 +362,20 @@ footer{
   }
 
   .feature{
-    min-height:auto;
     text-align:center;
+    min-height:auto;
   }
 
   .feature h3{
     font-size:28px;
   }
 
-  .hero-copy p{
-    font-size:18px;
+  .hero-scroll-wrap{
+    height:620vh;
   }
 
-  .hero-cards-section{
-    margin-top:30px;
+  .hero-copy p{
+    font-size:18px;
   }
 }
 
@@ -403,8 +388,12 @@ footer{
     display:block;
   }
 
+  .hero-scroll-wrap{
+    height:720vh;
+  }
+
   .hero-content{
-    padding:30px 20px 70px;
+    padding:30px 20px 0;
   }
 
   .hero-logo{
@@ -432,9 +421,9 @@ footer{
     margin-top:6px;
   }
 
-  .hero-cards-section{
-    margin-top:24px;
-    padding:0 20px;
+  .hero-panels{
+    margin-top:110px;
+    padding:0 20px 24px;
   }
 
   .features{
@@ -446,12 +435,8 @@ footer{
     border-radius:22px;
   }
 
-  .section-title{
-    font-size:30px;
-  }
-
-  .section-copy{
-    font-size:17px;
+  .bottom-section{
+    padding:70px 20px;
   }
 
   .lightbox{
@@ -490,89 +475,104 @@ footer{
 
 <body>
 
-<header class="hero">
-  <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
-    <source src="videos/hero.mp4" type="video/mp4">
-  </video>
+<div class="hero-scroll-wrap" id="hero-scroll-wrap">
+  <header class="hero">
+    <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
+      <source src="videos/hero.mp4" type="video/mp4">
+    </video>
 
-  <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
-    <source src="videos/hero-mobile.mp4" type="video/mp4">
-  </video>
+    <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
+      <source src="videos/hero-mobile.mp4" type="video/mp4">
+    </video>
 
-  <div class="hero-overlay"></div>
+    <div class="hero-overlay"></div>
 
-  <div class="hero-content">
-    <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
+    <div class="hero-moving-layer" id="hero-moving-layer">
+      <div class="hero-content">
+        <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
 
-    <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
+        <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
 
-    <div class="hero-copy">
-      <p>Build a complete digital record book for your athletic program.</p>
-      <p>Track player careers, season results, game statistics, and all-time records in one place!</p>
+        <div class="hero-copy">
+          <p>Build a complete digital record book for your athletic program.</p>
+          <p>Track player careers, season results, game statistics, and all-time records in one place.</p>
+        </div>
+      </div>
+
+      <div class="hero-panels">
+        <div class="hero-panels-inner">
+          <div class="features">
+            <div class="feature">
+              <h3>Player Career Pages</h3>
+              <p>Track the full career of every athlete with detailed statistics and game logs.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
+                aria-label="Open full-size Player Career Pages example"
+              >
+                <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to enlarge</div>
+            </div>
+
+            <div class="feature">
+              <h3>Season Histories</h3>
+              <p>View complete season records, schedules, and playoff brackets.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
+                aria-label="Open full-size Season Histories example"
+              >
+                <img src="images/season_histories_mini.png" alt="Season Histories preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to enlarge</div>
+            </div>
+
+            <div class="feature">
+              <h3>Program Records</h3>
+              <p>Automatically calculate and display all-time records for your program.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
+                aria-label="Open Program Records gallery"
+              >
+                <img src="images/program_records_mini.png" alt="Program Records preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to view more</div>
+            </div>
+
+            <div class="feature">
+              <h3>Opponent History</h3>
+              <p>Show your program’s all-time results, trends, and top performances against every opponent.</p>
+
+              <button
+                class="feature-image-button"
+                type="button"
+                onclick="openLightbox(['images/opponent_history_1.png', 'images/opponent_history_2.png'], 0, 'Opponent History example')"
+                aria-label="Open Opponent History gallery"
+              >
+                <img src="images/opponent_history_mini.png" alt="Opponent History preview">
+              </button>
+
+              <div class="feature-image-note">Tap image to view more</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>
 
-<section class="hero-cards-section">
-  <div class="features">
-
-    <div class="feature">
-      <h3>Player Career Pages</h3>
-      <p>Track the full career of every athlete with detailed statistics and game logs.</p>
-
-      <button
-        class="feature-image-button"
-        type="button"
-        onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
-        aria-label="Open full-size Player Career Pages example"
-      >
-        <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
-      </button>
-
-      <div class="feature-image-note">Tap image to enlarge</div>
-    </div>
-
-    <div class="feature">
-      <h3>Season Histories</h3>
-      <p>View complete season records, schedules, and playoff brackets.</p>
-
-      <button
-        class="feature-image-button"
-        type="button"
-        onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
-        aria-label="Open full-size Season Histories example"
-      >
-        <img src="images/season_histories_mini.png" alt="Season Histories preview">
-      </button>
-
-      <div class="feature-image-note">Tap image to enlarge</div>
-    </div>
-
-    <div class="feature">
-      <h3>Program Records</h3>
-      <p>Automatically calculate and display all-time records for your program.</p>
-
-      <button
-        class="feature-image-button"
-        type="button"
-        onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
-        aria-label="Open Program Records gallery"
-      >
-        <img src="images/program_records_mini.png" alt="Program Records preview">
-      </button>
-
-      <div class="feature-image-note">Tap image to view more</div>
-    </div>
-
-    <div class="feature">
-      <h3>Historical Archive</h3>
-      <p>Preserve decades of program history in one organized place.</p>
-    </div>
-
-  </div>
-</section>
-
-<section class="section demo-section">
+<section class="bottom-section">
   <button class="button" type="button" onclick="toggleForm()">Request a Demo</button>
 
   <form id="demo-form" class="contact-form">
@@ -585,23 +585,11 @@ footer{
 
   <p id="form-status"></p>
 
-  <a class="button" style="background:#475569;margin-top:10px;" href="https://stats.preplegacy.com">
-    Access Your School Site
-  </a>
-</section>
-
-<section class="section live-demo">
-  <h2 class="section-title" style="margin-top:0;">See PrepLegacy in Action</h2>
-  <p class="section-copy">
-    Explore a live example of how PrepLegacy can showcase a school’s program history,
-    player records, and season-by-season results.
-  </p>
-
-  <a class="button" href="https://standrewsathletics.com">View St. Andrew’s Basketball</a>
+  <a class="button secondary" href="https://stats.preplegacy.com">Access Your School Site</a>
 </section>
 
 <footer>
-  <p>© PrepLegacy</p>
+  <p>PrepLegacy Prototype</p>
 </footer>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -619,6 +607,25 @@ footer{
 </div>
 
 <script>
+const heroWrap = document.getElementById('hero-scroll-wrap');
+const heroMovingLayer = document.getElementById('hero-moving-layer');
+
+function updateHeroPrototype() {
+  const rect = heroWrap.getBoundingClientRect();
+  const maxScroll = rect.height - window.innerHeight;
+  const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
+
+  const startY = 0;
+  const endY = -(heroMovingLayer.offsetHeight - window.innerHeight + 40);
+  const currentY = startY + ((endY - startY) * progress);
+
+  heroMovingLayer.style.transform = `translateY(${currentY}px)`;
+}
+
+window.addEventListener('scroll', updateHeroPrototype, { passive: true });
+window.addEventListener('resize', updateHeroPrototype);
+window.addEventListener('load', updateHeroPrototype);
+
 function toggleForm() {
   const form = document.getElementById('demo-form');
   form.classList.toggle('active');
@@ -658,31 +665,7 @@ form.addEventListener('submit', async (e) => {
   } catch (error) {
     status.textContent = 'Something went wrong. Please try again.';
   }
-}
-
-/* SAFE CARD SCROLL EFFECT */
-const heroCardsSection = document.querySelector('.hero-cards-section');
-
-function updateCardsScroll() {
-  if (!heroCardsSection) return;
-
-  const rect = heroCardsSection.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-
-  let move = 0;
-
-  if (rect.top < viewportHeight) {
-    const progress = Math.min(Math.max((viewportHeight - rect.top) / viewportHeight, 0), 1);
-    const maxMove = window.innerWidth <= 768 ? 70 : 120;
-    move = progress * maxMove;
-  }
-
-  heroCardsSection.style.transform = `translateY(-${move}px)`;
-}
-
-window.addEventListener('scroll', updateCardsScroll, { passive: true });
-window.addEventListener('resize', updateCardsScroll);
-window.addEventListener('load', updateCardsScroll);
+});
 
 /* LIGHTBOX GALLERY */
 const lightbox = document.getElementById('lightbox');
