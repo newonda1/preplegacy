@@ -792,5 +792,23 @@ lightboxStage.addEventListener('touchend', (e) => {
   testSchoolLoader();
 </script>
 
+<script type="module">
+  import { getCurrentSchool } from "./js/getCurrentSchool.js";
+  import { applySchoolBranding } from "./js/applySchoolBranding.js";
+
+  async function initSchool() {
+    try {
+      const school = await getCurrentSchool();
+      applySchoolBranding(school);
+
+      console.log("School initialized:", school);
+    } catch (error) {
+      console.error("School initialization failed:", error);
+    }
+  }
+
+  initSchool();
+</script>
+  
 </body>
 </html>
