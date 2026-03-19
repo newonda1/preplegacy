@@ -6,8 +6,10 @@
     "city": "Savannah",
     "state": "GA",
     "colors": {
-      "primary": "#0f172a",
-      "secondary": "#f59e0b"
+      "primary": "#003A8F",
+      "secondary": "#FFFFFF",
+      "accent": "#000000",
+      "neutral": "#6B7280"
     },
     "logo": "/images/schools/standrews/logo.png"
   }
