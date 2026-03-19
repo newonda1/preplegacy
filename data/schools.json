@@ -1,0 +1,14 @@
+[
+  {
+    "id": "school_0001",
+    "name": "St. Andrew's School",
+    "slug": "standrews-savannahga",
+    "city": "Savannah",
+    "state": "GA",
+    "colors": {
+      "primary": "#0f172a",
+      "secondary": "#f59e0b"
+    },
+    "logo": "/images/schools/standrews/logo.png"
+  }
+]
