@@ -94,6 +94,7 @@ body.lightbox-open{
   max-width:1200px;
   margin:40px auto 0;
   padding:0 20px;
+  will-change:transform;
 }
 
 .features{
@@ -658,6 +659,30 @@ form.addEventListener('submit', async (e) => {
     status.textContent = 'Something went wrong. Please try again.';
   }
 }
+
+/* SAFE CARD SCROLL EFFECT */
+const heroCardsSection = document.querySelector('.hero-cards-section');
+
+function updateCardsScroll() {
+  if (!heroCardsSection) return;
+
+  const rect = heroCardsSection.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+
+  let move = 0;
+
+  if (rect.top < viewportHeight) {
+    const progress = Math.min(Math.max((viewportHeight - rect.top) / viewportHeight, 0), 1);
+    const maxMove = window.innerWidth <= 768 ? 70 : 120;
+    move = progress * maxMove;
+  }
+
+  heroCardsSection.style.transform = `translateY(-${move}px)`;
+}
+
+window.addEventListener('scroll', updateCardsScroll, { passive: true });
+window.addEventListener('resize', updateCardsScroll);
+window.addEventListener('load', updateCardsScroll);
 
 /* LIGHTBOX GALLERY */
 const lightbox = document.getElementById('lightbox');
