@@ -6,13 +6,6 @@
 <title>PrepLegacy</title>
 
 <style>
-:root{
-  --school-primary:#003A8F;
-  --school-secondary:#FFFFFF;
-  --school-accent:#000000;
-  --school-neutral:#6B7280;
-}
-
 body{
   margin:0;
   font-family:Arial, Helvetica, sans-serif;
@@ -183,8 +176,8 @@ body.lightbox-open{
   display:inline-block;
   margin-top:30px;
   padding:15px 30px;
-  background:var(--school-primary);
-  color:var(--school-secondary);
+  background:#2563eb;
+  color:white;
   text-decoration:none;
   border-radius:10px;
   font-weight:bold;
@@ -197,12 +190,10 @@ body.lightbox-open{
 .button:hover{
   transform:translateY(-2px);
   box-shadow:0 8px 20px rgba(0,0,0,0.08);
-  opacity:0.92;
 }
 
 .button.secondary{
-  background:var(--school-accent);
-  color:var(--school-secondary);
+  background:#475569;
   margin-top:12px;
 }
 
@@ -238,8 +229,8 @@ body.lightbox-open{
 .contact-form input:focus,
 .contact-form textarea:focus{
   outline:none;
-  border-color:var(--school-primary);
-  box-shadow:0 0 0 3px rgba(0,58,143,0.12);
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,0.12);
 }
 
 #form-status{
@@ -754,23 +745,5 @@ lightboxStage.addEventListener('touchend', (e) => {
 }, { passive: true });
 </script>
 
-<script type="module">
-  import { getCurrentSchool } from "./js/getCurrentSchool.js";
-  import { applySchoolBranding } from "./js/applySchoolBranding.js";
-
-  async function initSchool() {
-    try {
-      const school = await getCurrentSchool();
-      applySchoolBranding(school);
-
-      console.log("School initialized:", school);
-    } catch (error) {
-      console.error("School initialization failed:", error);
-    }
-  }
-
-  initSchool();
-</script>
-  
 </body>
 </html>
