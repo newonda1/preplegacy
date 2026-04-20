@@ -3,600 +3,428 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PrepLegacy</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#f8fafc;
-  color:#0f172a;
-  text-align:center;
-}
-
-body.lightbox-open{
-  overflow:hidden;
-}
-
-.hero-scroll-wrap{
-  position:relative;
-  height:420vh;
-}
-
-.hero{
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow:hidden;
-}
-
-.hero-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
-}
-
-.hero-video-mobile{
-  display:none;
-}
-
-.hero-overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(248,250,252,0.72);
-  z-index:1;
-}
-
-.hero-moving-layer{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  z-index:2;
-  will-change:transform;
-}
-
-.hero-content{
-  max-width:1100px;
-  margin:0 auto;
-  padding:36px 20px 0;
-}
-
-.hero-logo{
-  max-width:520px;
-  width:90%;
-  margin:0 auto 10px;
-  display:block;
-}
-
-.hero-title{
-  margin:0;
-  font-weight:500;
-  font-size:28px;
-  line-height:1.3;
-  color:#334155;
-}
-
-.hero-copy{
-  margin:28px auto 0;
-  max-width:1180px;
-}
-
-.hero-copy p{
-  margin:0;
-  font-size:26px;
-  line-height:1.45;
-  color:#475569;
-}
-
-.hero-copy p + p{
-  margin-top:8px;
-}
-
-.hero-panels{
-  margin-top:140px;
-  padding:0 20px 24px;
-  box-sizing:border-box;
-}
-
-.hero-panels-inner{
-  max-width:1200px;
-  margin:0 auto;
-}
-
-.features{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:36px;
-}
-
-.feature{
-  background:rgba(255,255,255,0.94);
-  padding:38px;
-  border-radius:24px;
-  box-shadow:0 10px 30px rgba(15,23,42,0.08);
-  text-align:left;
-  min-height:210px;
-  backdrop-filter:blur(4px);
-}
-
-.feature h3{
-  margin:0 0 18px 0;
-  color:#0f172a;
-  font-size:32px;
-  line-height:1.15;
-}
-
-.feature p{
-  margin:0 0 24px 0;
-  color:#475569;
-  line-height:1.55;
-  font-size:18px;
-}
-
-.feature-image-button{
-  display:block;
-  width:100%;
-  padding:0;
-  border:none;
-  background:none;
-  cursor:pointer;
-}
-
-.feature-image-button img{
-  display:block;
-  width:100%;
-  max-width:100%;
-  border-radius:16px;
-  box-shadow:0 8px 22px rgba(15,23,42,0.10);
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.feature-image-button:hover img{
-  transform:translateY(-2px);
-  box-shadow:0 12px 28px rgba(15,23,42,0.14);
-}
-
-.feature-image-note{
-  margin-top:12px;
-  font-size:14px;
-  color:#64748b;
-}
-
-.bottom-section{
-  max-width:1000px;
-  margin:0 auto;
-  padding:80px 20px;
-}
-
-.button{
-  display:inline-block;
-  margin-top:30px;
-  padding:15px 30px;
-  background:#2563eb;
-  color:white;
-  text-decoration:none;
-  border-radius:10px;
-  font-weight:bold;
-  transition:0.2s ease;
-  cursor:pointer;
-  border:none;
-  font-size:16px;
-}
-
-.button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
-
-.button.secondary{
-  background:#475569;
-  margin-top:12px;
-}
-
-.contact-form{
-  display:none;
-  flex-direction:column;
-  gap:14px;
-  max-width:560px;
-  margin:30px auto 0;
-}
-
-.contact-form.active{
-  display:flex;
-}
-
-.contact-form input,
-.contact-form textarea{
-  width:100%;
-  padding:14px 16px;
-  font-size:16px;
-  font-family:Arial, Helvetica, sans-serif;
-  border:1px solid #cbd5e1;
-  border-radius:10px;
-  background:white;
-  box-sizing:border-box;
-}
-
-.contact-form textarea{
-  min-height:140px;
-  resize:vertical;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus{
-  outline:none;
-  border-color:#2563eb;
-  box-shadow:0 0 0 3px rgba(37,99,235,0.12);
-}
-
-#form-status{
-  margin-top:14px;
-  color:#475569;
-  min-height:24px;
-}
-
-footer{
-  padding:40px;
-  color:#64748b;
-}
-
-/* LIGHTBOX / GALLERY */
-.lightbox{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  background:rgba(15,23,42,0.84);
-  z-index:1000;
-}
-
-.lightbox.active{
-  display:flex;
-}
-
-.lightbox-content{
-  position:relative;
-  width:min(1100px, 94vw);
-  max-height:90vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.lightbox-stage{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.lightbox-content img{
-  display:block;
-  max-width:100%;
-  max-height:90vh;
-  border-radius:18px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.35);
-  background:white;
-  user-select:none;
-  -webkit-user-drag:none;
-}
-
-.lightbox-close{
-  position:absolute;
-  top:-14px;
-  right:-14px;
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:50%;
-  background:white;
-  color:#0f172a;
-  font-size:26px;
-  line-height:1;
-  cursor:pointer;
-  box-shadow:0 8px 24px rgba(0,0,0,0.2);
-  z-index:3;
-}
-
-.lightbox-nav{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:50px;
-  height:50px;
-  border:none;
-  border-radius:50%;
-  background:rgba(255,255,255,0.94);
-  color:#0f172a;
-  font-size:30px;
-  line-height:1;
-  cursor:pointer;
-  box-shadow:0 8px 24px rgba(0,0,0,0.2);
-  z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.lightbox-prev{
-  left:-18px;
-}
-
-.lightbox-next{
-  right:-18px;
-}
-
-.lightbox-nav.hidden{
-  display:none;
-}
-
-.lightbox-counter{
-  position:absolute;
-  bottom:-34px;
-  left:50%;
-  transform:translateX(-50%);
-  color:white;
-  font-size:14px;
-  letter-spacing:0.02em;
-}
-
-@media (max-width: 1100px){
-  .hero-title{
-    font-size:25px;
-  }
-
-  .hero-copy p{
-    font-size:22px;
-  }
-}
-
-@media (max-width: 900px){
-  .features{
-    grid-template-columns:1fr;
-  }
-
-  .feature{
-    text-align:center;
-    min-height:auto;
-  }
-
-  .feature h3{
-    font-size:28px;
-  }
-
-  .hero-scroll-wrap{
-    height:620vh;
-  }
-
-  .hero-copy p{
-    font-size:18px;
-  }
-}
-
-@media (max-width: 768px){
-  .hero-video-desktop{
-    display:none;
-  }
-
-  .hero-video-mobile{
-    display:block;
-  }
-
-  .hero-scroll-wrap{
-    height:720vh;
-  }
-
-  .hero-content{
-    padding:30px 20px 0;
-  }
-
-  .hero-logo{
-    width:84%;
-    max-width:420px;
-    margin-bottom:8px;
-  }
-
-  .hero-title{
-    font-size:19px;
-    line-height:1.35;
-  }
-
-  .hero-copy{
-    margin-top:18px;
-    max-width:660px;
-  }
-
-  .hero-copy p{
-    font-size:16px;
-    line-height:1.5;
-  }
-
-  .hero-copy p + p{
-    margin-top:6px;
-  }
-
-  .hero-panels{
-    margin-top:110px;
-    padding:0 20px 24px;
-  }
-
-  .features{
-    gap:28px;
-  }
-
-  .feature{
-    padding:30px 24px;
-    border-radius:22px;
-  }
-
-  .bottom-section{
-    padding:70px 20px;
-  }
-
-  .lightbox{
-    padding:16px;
-  }
-
-  .lightbox-close{
-    top:-10px;
-    right:-10px;
-    width:38px;
-    height:38px;
-    font-size:24px;
-  }
-
-  .lightbox-nav{
-    width:42px;
-    height:42px;
-    font-size:24px;
-  }
-
-  .lightbox-prev{
-    left:-8px;
-  }
-
-  .lightbox-next{
-    right:-8px;
-  }
-
-  .lightbox-counter{
-    bottom:-28px;
-    font-size:13px;
-  }
-}
-</style>
+<title>PrepLegacy | Digital Record Books for High School Athletics</title>
+<meta
+  name="description"
+  content="PrepLegacy helps high school athletic programs turn stats, records, seasons, and player history into a polished digital record book."
+>
+<meta name="theme-color" content="#0d2138">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PrepLegacy">
+<meta property="og:title" content="PrepLegacy | Digital Record Books for High School Athletics">
+<meta
+  property="og:description"
+  content="Give your athletic program a better home for records, player careers, season history, and milestone moments."
+>
+<meta property="og:image" content="images/preplegacy-logo@2x.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PrepLegacy | Digital Record Books for High School Athletics">
+<meta
+  name="twitter:description"
+  content="A modern digital record book for high school athletics."
+>
+<meta name="twitter:image" content="images/preplegacy-logo@2x.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="preload" href="images/preplegacy-logo.png" as="image">
+<link rel="preload" href="images/hero-poster.svg" as="image" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script defer src="main.js"></script>
 </head>
-
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
-<div class="hero-scroll-wrap" id="hero-scroll-wrap">
-  <header class="hero">
-    <video class="hero-video hero-video-desktop" autoplay muted loop playsinline>
-      <source src="videos/hero.mp4" type="video/mp4">
-    </video>
+<header class="site-header" id="top">
+  <div class="site-header-inner">
+    <a class="brand-mark" href="#top" aria-label="PrepLegacy home">
+      <img src="images/preplegacy-logo.png" alt="PrepLegacy" width="874" height="172">
+    </a>
 
-    <video class="hero-video hero-video-mobile" autoplay muted loop playsinline>
-      <source src="videos/hero-mobile.mp4" type="video/mp4">
-    </video>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#product">Product</a>
+      <a href="#features">Features</a>
+      <a href="#demo">Request a Demo</a>
+      <a class="nav-secondary" href="https://stats.preplegacy.com">School Site</a>
+    </nav>
+  </div>
+</header>
 
-    <div class="hero-overlay"></div>
+<main id="main-content">
+  <section class="hero-section">
+    <div class="hero-media" aria-hidden="true">
+      <div class="hero-poster-shell"></div>
 
-    <div class="hero-moving-layer" id="hero-moving-layer">
-      <div class="hero-content">
-        <img src="images/preplegacy-logo.png" alt="PrepLegacy Logo" class="hero-logo">
+      <video
+        class="hero-video hero-video-desktop"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+        poster="images/hero-poster.svg"
+      >
+        <source src="videos/hero.mp4" type="video/mp4">
+      </video>
 
-        <h1 class="hero-title">Digital Record Books for High School Athletics</h1>
+      <video
+        class="hero-video hero-video-mobile"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="none"
+        poster="images/hero-poster.svg"
+      >
+        <source src="videos/hero-mobile.mp4" type="video/mp4">
+      </video>
 
-        <div class="hero-copy">
-          <p>Build a complete digital record book for your athletic program.</p>
-          <p>Track player careers, season results, game statistics, and all-time records in one place.</p>
+      <div class="hero-overlay"></div>
+      <div class="hero-orb hero-orb-one" data-parallax="0.16"></div>
+      <div class="hero-orb hero-orb-two" data-parallax="0.1"></div>
+      <div class="hero-grid"></div>
+    </div>
+
+    <div class="hero-shell">
+      <div class="hero-copy" data-parallax="0.07">
+        <p class="eyebrow">Digital record books for high school athletics</p>
+        <h1>Give your program history a home that looks as good as the moments it preserves.</h1>
+        <p class="hero-lead">
+          PrepLegacy turns stats, season archives, career milestones, and opponent history into a polished
+          site that coaches, families, alumni, and athletic departments can actually use.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#demo">Request a Demo</a>
+          <a class="button button-secondary" href="#features">Explore the Product</a>
         </div>
+
+        <ul class="hero-points" aria-label="PrepLegacy highlights">
+          <li>Built for coaches, athletic directors, boosters, and stat keepers.</li>
+          <li>Replaces scattered PDFs, spreadsheets, and static record-book documents.</li>
+          <li>Keeps school history searchable, current, and easy to share.</li>
+        </ul>
       </div>
 
-      <div class="hero-panels">
-        <div class="hero-panels-inner">
-          <div class="features">
-            <div class="feature">
-              <h3>Player Career Pages</h3>
-              <p>Track the full career of every athlete with detailed statistics and game logs.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/player_career_pages.png'], 0, 'Player Career Pages example')"
-                aria-label="Open full-size Player Career Pages example"
-              >
-                <img src="images/player_career_pages_mini.png" alt="Player Career Pages preview">
-              </button>
-
-              <div class="feature-image-note">Tap image to enlarge</div>
-            </div>
-
-            <div class="feature">
-              <h3>Season Histories</h3>
-              <p>View complete season records, schedules, and playoff brackets.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/season_histories.png'], 0, 'Season Histories example')"
-                aria-label="Open full-size Season Histories example"
-              >
-                <img src="images/season_histories_mini.png" alt="Season Histories preview">
-              </button>
-
-              <div class="feature-image-note">Tap image to enlarge</div>
-            </div>
-
-            <div class="feature">
-              <h3>Program Records</h3>
-              <p>Automatically calculate and display all-time records for your program.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/program_records_1.png', 'images/program_records_2.png'], 0, 'Program Records example')"
-                aria-label="Open Program Records gallery"
-              >
-                <img src="images/program_records_mini.png" alt="Program Records preview">
-              </button>
-
-              <div class="feature-image-note">Tap image to view more</div>
-            </div>
-
-            <div class="feature">
-              <h3>Opponent History</h3>
-              <p>Show your program’s all-time results, trends, and top performances against every opponent.</p>
-
-              <button
-                class="feature-image-button"
-                type="button"
-                onclick="openLightbox(['images/opponent_history_1.png', 'images/opponent_history_2.png'], 0, 'Opponent History example')"
-                aria-label="Open Opponent History gallery"
-              >
-                <img src="images/opponent_history_mini.png" alt="Opponent History preview">
-              </button>
-
-              <div class="feature-image-note">Tap image to view more</div>
-            </div>
-          </div>
+      <aside class="hero-panel" data-parallax="0.12" aria-label="What schools get">
+        <p class="panel-label">What schools get</p>
+        <div class="hero-panel-grid">
+          <article>
+            <h2>Career tracking</h2>
+            <p>Player pages with game logs, career totals, and milestone context.</p>
+          </article>
+          <article>
+            <h2>Season archives</h2>
+            <p>Schedules, records, playoffs, and year-by-year history in one place.</p>
+          </article>
+          <article>
+            <h2>Program records</h2>
+            <p>All-time leaders, top performances, and program-wide benchmarks.</p>
+          </article>
+          <article>
+            <h2>Opponent history</h2>
+            <p>Rivalry trends, matchup results, and performance snapshots by opponent.</p>
+          </article>
         </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-overview" id="product">
+    <div class="section-intro">
+      <p class="eyebrow">Product overview</p>
+      <h2>One place for the pieces every program tries to manage separately.</h2>
+      <p>
+        PrepLegacy is designed for programs that care about history, visibility, and continuity. It brings
+        together the reference pages people want, in a format that feels current instead of archival.
+      </p>
+    </div>
+
+    <div class="overview-grid">
+      <article class="info-card">
+        <p class="card-kicker">Preserve what matters</p>
+        <h3>Keep decades of results and milestones from disappearing into old files.</h3>
+        <p>
+          Turn historical records into a living archive that can grow each season instead of being rebuilt
+          from scratch.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <p class="card-kicker">Make it useful</p>
+        <h3>Give coaches and families a site they can navigate in seconds.</h3>
+        <p>
+          Surface stats, leaderboards, schedules, and notable performances in a layout that feels clear on
+          both desktop and mobile.
+        </p>
+      </article>
+
+      <article class="info-card">
+        <p class="card-kicker">Support the whole community</p>
+        <h3>Create something alumni, parents, and athletes actually want to revisit.</h3>
+        <p>
+          Showcase the history of the program in a format that can support storytelling, recognition, and
+          ongoing program pride.
+        </p>
+      </article>
+    </div>
+
+    <div class="process-strip" aria-label="How PrepLegacy works">
+      <article class="process-step">
+        <span>01</span>
+        <h3>Gather the history</h3>
+        <p>Season records, player stats, milestones, and record-book source material.</p>
+      </article>
+      <article class="process-step">
+        <span>02</span>
+        <h3>Organize the structure</h3>
+        <p>Map your data into career pages, archives, leaderboards, and rivalry views.</p>
+      </article>
+      <article class="process-step">
+        <span>03</span>
+        <h3>Publish a living site</h3>
+        <p>Launch a digital record book that can keep growing year after year.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-features" id="features">
+    <div class="section-intro section-intro-wide">
+      <p class="eyebrow">Feature showcase</p>
+      <h2>Designed around the pages athletic programs reach for most.</h2>
+      <p>
+        Each view is meant to make historical information easier to explore, compare, and share. Tap any
+        screenshot for a closer look.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="feature-copy">
+          <p class="card-kicker">Player career pages</p>
+          <h3>Follow an athlete’s full body of work, not just a final season summary.</h3>
+          <p>
+            Career totals, game logs, and season-by-season context stay connected, giving coaches and
+            families a fuller picture of what a player accomplished.
+          </p>
+        </div>
+
+        <button
+          class="feature-image-button"
+          type="button"
+          data-gallery="images/player_career_pages.png"
+          data-alt="Player Career Pages example"
+          aria-label="Open full-size Player Career Pages example"
+        >
+          <img
+            src="images/player_career_pages_mini.png"
+            alt="Player Career Pages preview"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="feature-image-note">Open full-size example</span>
+        </button>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-copy">
+          <p class="card-kicker">Season histories</p>
+          <h3>Package a year with the schedule, results, and postseason story in one place.</h3>
+          <p>
+            Give each season a page that is useful for quick reference now and valuable as part of the
+            long-term history of the program later.
+          </p>
+        </div>
+
+        <button
+          class="feature-image-button"
+          type="button"
+          data-gallery="images/season_histories.png"
+          data-alt="Season Histories example"
+          aria-label="Open full-size Season Histories example"
+        >
+          <img
+            src="images/season_histories_mini.png"
+            alt="Season Histories preview"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="feature-image-note">Open full-size example</span>
+        </button>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-copy">
+          <p class="card-kicker">Program records</p>
+          <h3>Highlight all-time leaders and benchmark performances without manual upkeep.</h3>
+          <p>
+            Put the pages people love to reference front and center, with layouts that make comparisons and
+            categories easy to scan.
+          </p>
+        </div>
+
+        <button
+          class="feature-image-button"
+          type="button"
+          data-gallery="images/program_records_1.png,images/program_records_2.png"
+          data-alt="Program Records example"
+          aria-label="Open Program Records gallery"
+        >
+          <img
+            src="images/program_records_mini.png"
+            alt="Program Records preview"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="feature-image-note">Open gallery</span>
+        </button>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-copy">
+          <p class="card-kicker">Opponent history</p>
+          <h3>Show rivalry context, trends, and top performances against every opponent.</h3>
+          <p>
+            Give your community a richer way to revisit the matchups that define the story of a program over
+            time.
+          </p>
+        </div>
+
+        <button
+          class="feature-image-button"
+          type="button"
+          data-gallery="images/opponent_history_1.png,images/opponent_history_2.png"
+          data-alt="Opponent History example"
+          aria-label="Open Opponent History gallery"
+        >
+          <img
+            src="images/opponent_history_mini.png"
+            alt="Opponent History preview"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="feature-image-note">Open gallery</span>
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-proof" id="proof">
+    <div class="section-intro">
+      <p class="eyebrow">Why this works</p>
+      <h2>A better fit than static documents for programs that want to keep building on their history.</h2>
+      <p>
+        PrepLegacy is meant to feel credible, practical, and durable. It supports the people doing the work
+        while giving the wider school community a much better experience.
+      </p>
+    </div>
+
+    <div class="proof-grid">
+      <article class="proof-card">
+        <h3>Built for real program maintenance</h3>
+        <p>Useful whether the source material starts with exports, spreadsheets, archived stat books, or past record-book documents.</p>
+      </article>
+
+      <article class="proof-card">
+        <h3>Readable across generations</h3>
+        <p>Modern enough for current families and athletes, while still honoring the history older alumni want to revisit.</p>
+      </article>
+
+      <article class="proof-card">
+        <h3>Designed to keep growing</h3>
+        <p>Structure the site once, then keep expanding it as more seasons, players, and achievements are added over time.</p>
+      </article>
+    </div>
+
+    <div class="quote-panel">
+      <p class="quote-text">
+        The goal is not just to store the data. The goal is to make the history of a program feel organized,
+        visible, and worth returning to.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-demo" id="demo">
+    <div class="demo-intro">
+      <p class="eyebrow">Request a demo</p>
+      <h2>Show us your program, and we’ll show you what PrepLegacy could look like for it.</h2>
+      <p>
+        This is best for schools, coaches, athletic departments, and program supporters who want a stronger
+        digital home for their history. Share a little context and we will follow up with next steps.
+      </p>
+
+      <div class="demo-support">
+        <p>No commitment required.</p>
+        <p>Tell us what sport, school, or record-book material you want to organize.</p>
       </div>
     </div>
-  </header>
-</div>
 
-<section class="bottom-section">
-  <button class="button" type="button" onclick="toggleForm()">Request a Demo</button>
+    <div class="demo-card" id="demo-form-card">
+      <form id="demo-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="name" autocomplete="name" required>
+        </div>
 
-  <form id="demo-form" class="contact-form">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
-    <input type="text" name="school" placeholder="School Name">
-    <textarea name="message" placeholder="Tell us about your program and what you'd like to build." required></textarea>
-    <button class="button" type="submit">Submit Request</button>
-  </form>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" autocomplete="email" required>
+        </div>
 
-  <p id="form-status"></p>
+        <div class="form-row">
+          <label for="school">School or program</label>
+          <input id="school" type="text" name="school" autocomplete="organization">
+        </div>
 
-  <a class="button secondary" href="https://stats.preplegacy.com">Access Your School Site</a>
-</section>
+        <div class="form-row">
+          <label for="message">What would you like to build?</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            required
+          ></textarea>
+        </div>
 
-<footer>
-  <p>PrepLegacy Prototype</p>
+        <button class="button button-primary button-submit" type="submit">Send Demo Request</button>
+        <p class="form-note">We only use this information to respond to your request.</p>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section-access" id="access">
+    <div class="access-card">
+      <div>
+        <p class="eyebrow">Already working with PrepLegacy?</p>
+        <h2>Access your school site.</h2>
+        <p>
+          Returning users can jump straight to the live school experience here.
+        </p>
+      </div>
+
+      <a class="button button-secondary" href="https://stats.preplegacy.com">Access Your School Site</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>PrepLegacy prototype site for digital athletic record books.</p>
 </footer>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <div class="lightbox-content" onclick="event.stopPropagation()">
-    <button class="lightbox-close" type="button" onclick="closeLightbox()" aria-label="Close image">&times;</button>
-    <button class="lightbox-nav lightbox-prev hidden" id="lightbox-prev" type="button" onclick="showPrevImage()" aria-label="Previous image">&#8249;</button>
-    <button class="lightbox-nav lightbox-next hidden" id="lightbox-next" type="button" onclick="showNextImage()" aria-label="Next image">&#8250;</button>
+<div
+  class="lightbox"
+  id="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-labelledby="lightbox-title"
+>
+  <div class="lightbox-backdrop" data-lightbox-close="true"></div>
+
+  <div class="lightbox-content">
+    <p id="lightbox-title" class="sr-only">Feature image preview</p>
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image preview">&times;</button>
+    <button class="lightbox-nav lightbox-prev hidden" id="lightbox-prev" type="button" aria-label="Previous image">&#8249;</button>
+    <button class="lightbox-nav lightbox-next hidden" id="lightbox-next" type="button" aria-label="Next image">&#8250;</button>
 
     <div class="lightbox-stage" id="lightbox-stage">
       <img id="lightbox-image" src="" alt="">
@@ -605,145 +433,5 @@ footer{
     <div class="lightbox-counter" id="lightbox-counter"></div>
   </div>
 </div>
-
-<script>
-const heroWrap = document.getElementById('hero-scroll-wrap');
-const heroMovingLayer = document.getElementById('hero-moving-layer');
-
-function updateHeroPrototype() {
-  const rect = heroWrap.getBoundingClientRect();
-  const maxScroll = rect.height - window.innerHeight;
-  const progress = Math.min(Math.max(-rect.top / maxScroll, 0), 1);
-
-  const startY = 0;
-  const endY = -(heroMovingLayer.offsetHeight - window.innerHeight + 40);
-  const currentY = startY + ((endY - startY) * progress);
-
-  heroMovingLayer.style.transform = `translateY(${currentY}px)`;
-}
-
-window.addEventListener('scroll', updateHeroPrototype, { passive: true });
-window.addEventListener('resize', updateHeroPrototype);
-window.addEventListener('load', updateHeroPrototype);
-
-function toggleForm() {
-  const form = document.getElementById('demo-form');
-  form.classList.toggle('active');
-
-  if (form.classList.contains('active')) {
-    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-const form = document.getElementById('demo-form');
-const status = document.getElementById('form-status');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  status.textContent = 'Sending...';
-
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-
-  try {
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      status.textContent = 'Thanks! Your request has been sent.';
-      form.reset();
-      form.classList.remove('active');
-    } else {
-      status.textContent = result.message || 'Something went wrong.';
-    }
-  } catch (error) {
-    status.textContent = 'Something went wrong. Please try again.';
-  }
-});
-
-/* LIGHTBOX GALLERY */
-const lightbox = document.getElementById('lightbox');
-const lightboxImage = document.getElementById('lightbox-image');
-const lightboxPrev = document.getElementById('lightbox-prev');
-const lightboxNext = document.getElementById('lightbox-next');
-const lightboxCounter = document.getElementById('lightbox-counter');
-const lightboxStage = document.getElementById('lightbox-stage');
-
-let lightboxImages = [];
-let lightboxIndex = 0;
-let lightboxAlt = '';
-
-function openLightbox(images, startIndex = 0, alt = '') {
-  lightboxImages = images;
-  lightboxIndex = startIndex;
-  lightboxAlt = alt;
-  updateLightboxImage();
-  lightbox.classList.add('active');
-  document.body.classList.add('lightbox-open');
-}
-
-function updateLightboxImage() {
-  if (!lightboxImages.length) return;
-
-  lightboxImage.src = lightboxImages[lightboxIndex];
-  lightboxImage.alt = lightboxAlt;
-
-  const multiple = lightboxImages.length > 1;
-  lightboxPrev.classList.toggle('hidden', !multiple);
-  lightboxNext.classList.toggle('hidden', !multiple);
-  lightboxCounter.textContent = multiple ? `${lightboxIndex + 1} / ${lightboxImages.length}` : '';
-}
-
-function showPrevImage() {
-  if (lightboxImages.length <= 1) return;
-  lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
-  updateLightboxImage();
-}
-
-function showNextImage() {
-  if (lightboxImages.length <= 1) return;
-  lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
-  updateLightboxImage();
-}
-
-function closeLightbox() {
-  lightbox.classList.remove('active');
-  lightboxImage.src = '';
-  lightboxImage.alt = '';
-  lightboxCounter.textContent = '';
-  lightboxImages = [];
-  lightboxIndex = 0;
-  document.body.classList.remove('lightbox-open');
-}
-
-document.addEventListener('keydown', (e) => {
-  if (!lightbox.classList.contains('active')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft') showPrevImage();
-  if (e.key === 'ArrowRight') showNextImage();
-});
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-lightboxStage.addEventListener('touchstart', (e) => {
-  touchStartX = e.changedTouches[0].clientX;
-}, { passive: true });
-
-lightboxStage.addEventListener('touchend', (e) => {
-  touchEndX = e.changedTouches[0].clientX;
-  const swipeDistance = touchEndX - touchStartX;
-  if (Math.abs(swipeDistance) < 40) return;
-  if (swipeDistance > 0) showPrevImage();
-  else showNextImage();
-}, { passive: true });
-</script>
-
 </body>
 </html>
