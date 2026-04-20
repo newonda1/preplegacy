@@ -11,6 +11,10 @@ const lightboxCounter = document.getElementById("lightbox-counter");
 const lightboxCloseButton = document.getElementById("lightbox-close");
 const lightboxStage = document.getElementById("lightbox-stage");
 const galleryButtons = Array.from(document.querySelectorAll(".feature-image-button"));
+const schoolSearchInput = document.getElementById("school-search");
+const schoolSearchStatus = document.getElementById("school-search-status");
+const schoolSearchEmpty = document.getElementById("school-search-empty");
+const schoolCards = Array.from(document.querySelectorAll("[data-school-card]"));
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let lightboxImages = [];
@@ -128,6 +132,34 @@ async function handleFormSubmit(event) {
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "Send Demo Request";
+  }
+}
+
+function updateSchoolDirectory() {
+  if (!schoolSearchInput || !schoolCards.length) {
+    return;
+  }
+
+  const query = schoolSearchInput.value.trim().toLowerCase();
+  let visibleCount = 0;
+
+  schoolCards.forEach((card) => {
+    const haystack = String(card.dataset.search || "").toLowerCase();
+    const matches = !query || haystack.includes(query);
+    card.classList.toggle("hidden", !matches);
+    if (matches) {
+      visibleCount += 1;
+    }
+  });
+
+  if (schoolSearchStatus) {
+    schoolSearchStatus.textContent = query
+      ? `${visibleCount} matching school site${visibleCount === 1 ? "" : "s"}`
+      : `${schoolCards.length} live school site${schoolCards.length === 1 ? "" : "s"} currently available`;
+  }
+
+  if (schoolSearchEmpty) {
+    schoolSearchEmpty.classList.toggle("hidden", visibleCount !== 0);
   }
 }
 
@@ -255,49 +287,59 @@ galleryButtons.forEach((button) => {
   });
 });
 
-lightboxCloseButton.addEventListener("click", closeLightbox);
-lightboxPrev.addEventListener("click", showPrevImage);
-lightboxNext.addEventListener("click", showNextImage);
+if (lightboxCloseButton && lightboxPrev && lightboxNext && lightbox && lightboxStage) {
+  lightboxCloseButton.addEventListener("click", closeLightbox);
+  lightboxPrev.addEventListener("click", showPrevImage);
+  lightboxNext.addEventListener("click", showNextImage);
 
-lightbox.addEventListener("click", (event) => {
-  const target = event.target;
-  if (target instanceof HTMLElement && target.dataset.lightboxClose === "true") {
-    closeLightbox();
-  }
-});
-
-lightboxStage.addEventListener(
-  "touchstart",
-  (event) => {
-    touchStartX = event.changedTouches[0].clientX;
-  },
-  { passive: true }
-);
-
-lightboxStage.addEventListener(
-  "touchend",
-  (event) => {
-    const touchEndX = event.changedTouches[0].clientX;
-    const swipeDistance = touchEndX - touchStartX;
-
-    if (Math.abs(swipeDistance) < 40) {
-      return;
+  lightbox.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLElement && target.dataset.lightboxClose === "true") {
+      closeLightbox();
     }
+  });
 
-    if (swipeDistance > 0) {
-      showPrevImage();
-    } else {
-      showNextImage();
-    }
-  },
-  { passive: true }
-);
+  lightboxStage.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+    },
+    { passive: true }
+  );
+
+  lightboxStage.addEventListener(
+    "touchend",
+    (event) => {
+      const touchEndX = event.changedTouches[0].clientX;
+      const swipeDistance = touchEndX - touchStartX;
+
+      if (Math.abs(swipeDistance) < 40) {
+        return;
+      }
+
+      if (swipeDistance > 0) {
+        showPrevImage();
+      } else {
+        showNextImage();
+      }
+    },
+    { passive: true }
+  );
+}
 
 document.addEventListener("keydown", handleKeydown);
 window.addEventListener("scroll", updateParallax, { passive: true });
 window.addEventListener("resize", updateParallax);
 prefersReducedMotion.addEventListener("change", setReducedMotionState);
-form.addEventListener("submit", handleFormSubmit);
+
+if (form) {
+  form.addEventListener("submit", handleFormSubmit);
+}
+
+if (schoolSearchInput) {
+  schoolSearchInput.addEventListener("input", updateSchoolDirectory);
+}
 
 setReducedMotionState(prefersReducedMotion);
 updateParallax();
+updateSchoolDirectory();

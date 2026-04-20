@@ -722,6 +722,10 @@ textarea{
   gap:18px;
 }
 
+.hidden{
+  display:none !important;
+}
+
 .site-footer{
   padding:0 20px 50px;
   text-align:center;
@@ -822,6 +826,213 @@ textarea{
   letter-spacing:0.04em;
 }
 
+.portal-page{
+  min-height:100vh;
+}
+
+.portal-main{
+  padding-bottom:48px;
+}
+
+.portal-hero{
+  padding-top:52px;
+}
+
+.portal-hero-card{
+  padding:38px;
+  border-radius:32px;
+  background:
+    linear-gradient(135deg, rgba(255,249,239,0.94), rgba(255,252,247,0.78)),
+    radial-gradient(circle at top right, rgba(15,118,110,0.12), transparent 28%);
+  border:1px solid var(--surface-border);
+  box-shadow:var(--shadow-md);
+}
+
+.portal-hero-card h1{
+  margin:0;
+  font-family:var(--display-font);
+  font-size:clamp(2.5rem, 4vw, 4.2rem);
+  line-height:0.98;
+  letter-spacing:-0.03em;
+}
+
+.portal-lead{
+  max-width:760px;
+  margin:20px 0 0;
+  color:var(--ink-soft);
+  font-size:1.08rem;
+  line-height:1.75;
+}
+
+.portal-search-row{
+  margin-top:30px;
+  display:grid;
+  gap:10px;
+  max-width:640px;
+}
+
+.portal-search-label{
+  font-weight:700;
+}
+
+.portal-search-input{
+  width:100%;
+  box-sizing:border-box;
+  min-height:58px;
+  padding:0 18px;
+  border-radius:18px;
+  border:1px solid rgba(16,36,56,0.14);
+  background:#fffdfa;
+  color:var(--ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.portal-search-input:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(15,118,110,0.14);
+}
+
+.portal-status-row{
+  margin-top:18px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 18px;
+  align-items:center;
+}
+
+.portal-status,
+.portal-soon{
+  margin:0;
+  color:var(--muted);
+}
+
+.portal-directory{
+  padding-top:22px;
+}
+
+.school-grid{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:22px;
+}
+
+.school-card{
+  padding:30px;
+  border-radius:30px;
+  background:
+    linear-gradient(180deg, rgba(255,250,242,0.96), rgba(255,248,238,0.86)),
+    radial-gradient(circle at top right, rgba(194,134,45,0.12), transparent 32%);
+  border:1px solid var(--surface-border);
+  box-shadow:var(--shadow-md);
+}
+
+.school-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.school-badge{
+  margin:0;
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(15,118,110,0.12);
+  color:var(--accent-strong);
+  font-size:0.82rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+}
+
+.school-meta{
+  margin:0;
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+.school-card h3{
+  margin:18px 0 0;
+  font-size:2rem;
+  line-height:1.02;
+  font-family:var(--display-font);
+}
+
+.school-copy{
+  margin:14px 0 0;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+.school-details{
+  margin:22px 0 0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:10px;
+  color:var(--ink-soft);
+}
+
+.school-details li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+}
+
+.school-details li::before{
+  content:"";
+  width:9px;
+  height:9px;
+  margin-top:8px;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--accent));
+}
+
+.school-actions{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.portal-empty{
+  margin-top:28px;
+  padding:28px;
+  border-radius:24px;
+  background:rgba(255,250,242,0.78);
+  border:1px solid var(--surface-border);
+  box-shadow:var(--shadow-sm);
+}
+
+.portal-empty p{
+  margin:0;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+.portal-empty p + p{
+  margin-top:8px;
+}
+
+.portal-empty .button{
+  margin-top:18px;
+}
+
+.portal-support{
+  padding-top:12px;
+}
+
+.portal-support-card{
+  background:
+    linear-gradient(135deg, rgba(255,250,242,0.94), rgba(255,250,242,0.82)),
+    radial-gradient(circle at top right, rgba(15,118,110,0.12), transparent 28%);
+}
+
 @media (max-width: 1080px){
   .hero-shell,
   .section-demo{
@@ -843,6 +1054,10 @@ textarea{
   }
 
   .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .school-grid{
     grid-template-columns:1fr;
   }
 
@@ -875,7 +1090,10 @@ textarea{
   .info-card,
   .proof-card,
   .quote-panel,
-  .access-card{
+  .access-card,
+  .portal-hero-card,
+  .school-card,
+  .portal-empty{
     padding:24px;
   }
 
@@ -907,6 +1125,10 @@ textarea{
 
   .button{
     width:100%;
+  }
+
+  .school-actions{
+    flex-direction:column;
   }
 
   .site-nav a{
@@ -948,6 +1170,12 @@ textarea{
   .lightbox-counter{
     margin-top:12px;
     padding-bottom:60px;
+  }
+
+  .portal-status-row,
+  .school-card-top{
+    align-items:flex-start;
+    flex-direction:column;
   }
 }
 
