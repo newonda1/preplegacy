@@ -277,6 +277,8 @@ textarea{
 .info-card,
 .feature-card,
 .proof-card,
+.fit-lead-card,
+.fit-card,
 .quote-panel,
 .demo-card,
 .access-card{
@@ -482,6 +484,10 @@ textarea{
   border-radius:24px;
 }
 
+.section-fit{
+  padding-top:52px;
+}
+
 .card-kicker{
   margin:0 0 12px;
   color:var(--gold);
@@ -494,7 +500,9 @@ textarea{
 .info-card h3,
 .feature-copy h3,
 .process-step h3,
-.proof-card h3{
+.proof-card h3,
+.fit-lead-card h3,
+.fit-card h3{
   margin:0;
   font-size:1.28rem;
   line-height:1.25;
@@ -503,10 +511,81 @@ textarea{
 .info-card p:last-child,
 .feature-copy p:last-child,
 .process-step p,
-.proof-card p{
+.proof-card p,
+.fit-lead-card p:last-child,
+.fit-card p{
   margin:14px 0 0;
   color:var(--muted);
   line-height:1.65;
+}
+
+.fit-layout{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:minmax(280px, 0.82fr) minmax(0, 1.18fr);
+  gap:22px;
+  align-items:stretch;
+}
+
+.fit-lead-card{
+  padding:30px;
+  border-radius:28px;
+  background:
+    linear-gradient(180deg, rgba(255,250,242,0.95), rgba(255,248,238,0.86)),
+    radial-gradient(circle at top right, rgba(15,118,110,0.11), transparent 32%);
+}
+
+.fit-lead-card h3{
+  font-size:clamp(1.55rem, 2.3vw, 2.15rem);
+  line-height:1.08;
+  font-family:var(--display-font);
+}
+
+.fit-card-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:18px;
+}
+
+.fit-card{
+  padding:24px;
+  border-radius:22px;
+}
+
+.comparison-panel{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:0;
+  overflow:hidden;
+  border-radius:28px;
+  background:rgba(16,36,56,0.95);
+  color:#fff;
+  box-shadow:var(--shadow-md);
+}
+
+.comparison-panel > div{
+  padding:26px 28px;
+}
+
+.comparison-panel > div + div{
+  border-left:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.07);
+}
+
+.comparison-panel p{
+  margin:0;
+  color:rgba(255,255,255,0.78);
+  line-height:1.6;
+}
+
+.comparison-panel .comparison-label{
+  margin-bottom:10px;
+  color:#f1d2a0;
+  font-size:0.82rem;
+  font-weight:800;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
 }
 
 .process-strip{
@@ -1049,8 +1128,19 @@ textarea{
 
   .overview-grid,
   .process-strip,
-  .proof-grid{
+  .proof-grid,
+  .fit-layout,
+  .comparison-panel{
     grid-template-columns:1fr;
+  }
+
+  .fit-card-grid{
+    grid-template-columns:1fr;
+  }
+
+  .comparison-panel > div + div{
+    border-left:none;
+    border-top:1px solid rgba(255,255,255,0.14);
   }
 
   .feature-grid{
@@ -1089,6 +1179,9 @@ textarea{
   .demo-card,
   .info-card,
   .proof-card,
+  .fit-lead-card,
+  .fit-card,
+  .comparison-panel > div,
   .quote-panel,
   .access-card,
   .portal-hero-card,
